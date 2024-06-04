@@ -1,4 +1,4 @@
-package com.danyatheworst.Player;
+package com.danyatheworst.player;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,4 +19,8 @@ public class Player {
 
     @Column(unique = true, nullable = false)
     private String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
 }

@@ -1,4 +1,4 @@
-package com.danyatheworst.Match;
+package com.danyatheworst.match;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateMatchRequestDto {
-    String playerName1;
-    String playerName2;
+    private String playerName1;
+    private String playerName2;
 }

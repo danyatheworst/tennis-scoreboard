@@ -1,6 +1,6 @@
-package com.danyatheworst.Match;
+package com.danyatheworst.match;
 
-import com.danyatheworst.Player.Player;
+import com.danyatheworst.player.Player;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +32,7 @@ public class Match {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "winner_id", nullable = false)
     private Player winner;
+
+    @Transient
+    private Score score = new Score();
 }
