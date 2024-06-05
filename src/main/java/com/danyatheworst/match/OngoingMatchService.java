@@ -3,11 +3,13 @@ package com.danyatheworst.match;
 import com.danyatheworst.player.Player;
 import com.danyatheworst.player.PlayerRepository;
 
+import java.util.UUID;
+
 public class OngoingMatchService {
     private final PlayerRepository playerRepository = new PlayerRepository();
     private final OngoingMatchRepository ongoingMatchRepository = new OngoingMatchRepository();
 
-    public String createNewMatch(CreateMatchRequestDto createMatchRequestDto) {
+    public UUID createNewMatch(CreateMatchRequestDto createMatchRequestDto) {
         String playerName1 = createMatchRequestDto.getPlayerName1();
         String playerName2 = createMatchRequestDto.getPlayerName2();
 

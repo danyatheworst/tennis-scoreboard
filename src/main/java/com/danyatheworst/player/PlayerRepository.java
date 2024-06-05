@@ -10,7 +10,7 @@ public class PlayerRepository {
     public Optional<Player> findByName(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-
+        //TODO: find by name??
         Query<Player> query = session.createQuery("from Player where name = :name", Player.class);
         query.setParameter("name", name);
         Player player = query.uniqueResult();

@@ -10,11 +10,11 @@ public class OngoingMatchRepository {
         return ongoingMatches.get(UUID.fromString(id));
     }
 
-    public String save(Match ongoingMatch) {
+    public UUID save(Match ongoingMatch) {
         UUID uuid = UUID.randomUUID();
         this.ongoingMatches.put(uuid, ongoingMatch);
 
-        return uuid.toString();
+        return uuid;
     }
 
     public void remove(UUID uuid) {
