@@ -1,23 +1,22 @@
 package com.danyatheworst.match;
 
+import com.danyatheworst.OngoingMatchesDB;
+
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class OngoingMatchRepository {
-    private final ConcurrentHashMap<UUID, Match> ongoingMatches = new ConcurrentHashMap<>();
 
-    public Match getById(String id) {
-        return ongoingMatches.get(UUID.fromString(id));
+    public Optional<Match> getById(UUID uuid) {
+        return OngoingMatchesDB.getById(uuid);
     }
 
     public UUID save(Match ongoingMatch) {
-        UUID uuid = UUID.randomUUID();
-        this.ongoingMatches.put(uuid, ongoingMatch);
-
-        return uuid;
+        return OngoingMatchesDB.save(ongoingMatch);
     }
 
     public void remove(UUID uuid) {
-        this.ongoingMatches.remove(uuid);
+        OngoingMatchesDB.remove(uuid);
     }
 }

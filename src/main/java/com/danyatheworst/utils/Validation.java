@@ -18,7 +18,7 @@ public final class Validation {
         validatePlayerName(playerName2, "playerName2");
     }
 
-    private static void validatePresence(String value, String key) {
+    public static void validatePresence(String value, String key) {
         if (value == null || value.isBlank()) {
             throw new InvalidParameterException(key + " is missing");
         }
