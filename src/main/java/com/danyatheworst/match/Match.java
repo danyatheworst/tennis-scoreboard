@@ -1,5 +1,6 @@
 package com.danyatheworst.match;
 
+import com.danyatheworst.match.score.Score;
 import com.danyatheworst.player.Player;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,6 @@ public class Match {
     @JoinColumn(name = "winner_id", nullable = false)
     private Player winner;
 
-    @Transient
-    private Score score = new Score();
+//    @Transient
+//    private Score score = new Score();
 }

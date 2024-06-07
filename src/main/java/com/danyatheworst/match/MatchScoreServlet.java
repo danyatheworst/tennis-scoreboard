@@ -24,11 +24,11 @@ public class MatchScoreServlet extends HttpServlet {
             Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
 
             req.setAttribute("uuid", uuid);
-            req.setAttribute("playerName1", ongoingMatch.getPlayer1());
-            req.setAttribute("playerName2", ongoingMatch.getPlayer2());
+            req.setAttribute("playerName1", ongoingMatch.getPlayer1().getName());
+            req.setAttribute("playerName2", ongoingMatch.getPlayer2().getName());
             req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
         } catch (NotFoundException e) {
-            System.out.println(e.getMessage());
+            req.getRequestDispatcher("/not-found.jsp").forward(req, resp);
         } catch (DatabaseOperationException e) {
             System.out.println(e.getMessage());
         }
@@ -38,6 +38,7 @@ public class MatchScoreServlet extends HttpServlet {
         try {
             return UUID.fromString(string);
         } catch (IllegalArgumentException e) {
+//            TODO: which page to show?
             throw new InvalidParameterException("Match id " + string + " is not valid");
         }
     }
