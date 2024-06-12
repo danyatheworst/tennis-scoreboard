@@ -11,25 +11,25 @@ public class RegularGameScore extends GameScore<Point> {
     }
 
     @Override
-    protected State pointWon(int playerNumber) {
-        Point winnerScore = this.getPlayerScore(playerNumber);
-        Point loserScore = this.getOppositePlayerScore(playerNumber);
+    public State pointWon(int playerNumber) {
+        Point playerScore = this.getPlayerScore(playerNumber);
+        Point oppositePlayerScore = this.getOppositePlayerScore(playerNumber);
 
-        if (winnerScore.ordinal() <= THIRTY.ordinal()) {
-            this.setPlayerScore(playerNumber, winnerScore.next());
+        if (playerScore.ordinal() <= THIRTY.ordinal()) {
+            this.setPlayerScore(playerNumber, playerScore.next());
             return ONGOING;
         } else {
-            if (loserScore.ordinal() <= THIRTY.ordinal()) {
+            if (oppositePlayerScore.ordinal() <= THIRTY.ordinal()) {
                 if (playerNumber == 0) {
                     return PLAYER_ONE_WON;
                 }
                 return PLAYER_TWO_WON;
 //                40-40 / AD-40 / 40-AD
             } else {
-                if (winnerScore.ordinal() == loserScore.ordinal()) {
+                if (playerScore.ordinal() == oppositePlayerScore.ordinal()) {
                     this.setPlayerScore(playerNumber, ADVANTAGE);
                     return ONGOING;
-                } else if (winnerScore.ordinal() == ADVANTAGE.ordinal()) {
+                } else if (playerScore.ordinal() == ADVANTAGE.ordinal()) {
                     if (playerNumber == 0) {
                         return PLAYER_ONE_WON;
                     }
