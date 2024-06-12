@@ -28,7 +28,7 @@ public class SetTests {
     }
 
     @Test
-    void testSetIsNotFinishedIfDifferenceLessThanTwo() {
+    void testPlayerOneWinsSevenFive() {
         //first player wins 5 games => score is 5:0 in games (0:0 points)
         for (int i = 0; i < 20; i++) {
             assertEquals(ONGOING, this.score.pointWon(0));
@@ -42,6 +42,17 @@ public class SetTests {
         for (int i = 0; i < 4; i++) {
             assertEquals(ONGOING, this.score.pointWon(0));
         }
+
+        //6  |40
+        //5
+        for (int i = 0; i < 3; i++) {
+            assertEquals(ONGOING, this.score.pointWon(0));
+        }
+
+        //7
+        //5
+        assertEquals(PLAYER_ONE_WON, this.score.pointWon(0));
+
     }
 
     @Test

@@ -34,7 +34,6 @@ public class MatchScore extends Score<Integer> {
         if (playerScore == 2 && oppositePlayerScore <= 1) {
             return playerNumber == 0 ? PLAYER_ONE_WON : PLAYER_TWO_WON;
         }
-
         return ONGOING;
     }
 }

@@ -8,6 +8,7 @@ abstract public class Score<T> {
 
     abstract protected T getZeroScore();
     abstract protected State pointWon(int playerNumber);
+
     protected Score() {
         this.playerScores.add(this.getZeroScore());
         this.playerScores.add(this.getZeroScore());

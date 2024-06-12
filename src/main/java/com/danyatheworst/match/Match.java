@@ -1,6 +1,7 @@
 package com.danyatheworst.match;
 
-import com.danyatheworst.match.score.Score;
+
+import com.danyatheworst.match.score.MatchScore;
 import com.danyatheworst.player.Player;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,21 +20,21 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-//    @Column(nullable = false)
+    //    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player1_id", nullable = false)
     private Player player1;
 
-//    @Column(nullable = false)
+    //    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player2_id", nullable = false)
     private Player player2;
 
-//    @Column(nullable = false)
+    //    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "winner_id", nullable = false)
     private Player winner;
 
-//    @Transient
-//    private Score score = new Score();
+    @Transient
+    private MatchScore score = new MatchScore();
 }
