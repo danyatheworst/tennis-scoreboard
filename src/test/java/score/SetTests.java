@@ -70,4 +70,32 @@ public class SetTests {
             assertEquals(ONGOING, this.score.pointWon(1));
         }
     }
+
+    @Test
+    void testPlayerOneWinsSetWithTieBreak() {
+        //first player wins 5 games => score is 5:0 in games (0:0 points)
+        for (int i = 0; i < 20; i++) {
+            assertEquals(ONGOING, this.score.pointWon(0));
+        }
+        //second player wins 5 games => score is 5:5 in games (0:0 points)
+        for (int i = 0; i < 20; i++) {
+            assertEquals(ONGOING, this.score.pointWon(1));
+        }
+
+        //both players win a game each => 6:6
+        for (int i = 0; i < 4; i++) {
+            assertEquals(ONGOING, this.score.pointWon(0));
+        }
+        for (int i = 0; i < 4; i++) {
+            assertEquals(ONGOING, this.score.pointWon(1));
+        }
+
+        //tie-break has been started and first player wins 6 tie-break points
+        for (int i = 0; i < 6; i++) {
+            assertEquals(ONGOING, this.score.pointWon(0));
+        }
+
+        //first player win a tie-break => win a set
+        assertEquals(PLAYER_ONE_WON, this.score.pointWon(0));
+    }
 }
