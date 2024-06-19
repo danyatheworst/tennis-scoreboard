@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found</title>
+    <title>Internal Server Error</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/error.css">
 </head>
 <body>
 <div class="error-message">
-    <h1>Page Not Found</h1>
-    <p>The page you requested could not be found.</p>
-    <p>Please check the URL or go back to the <a href="/">homepage</a>.</p>
+    <h1>Internal Server Error</h1>
+    <p>Sorry, something went wrong on our end. Please try refreshing the page or come back later.</p>
+    <p>If the problem persists, please contact <a href="mailto:support@example.com">support@example.com</a>.</p>
 </div>
 </body>
 </html>

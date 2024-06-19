@@ -27,11 +27,17 @@ public final class Validation {
     //TODO: key????
     private static void validatePlayerName(String name, String key) {
         validatePresence(name, key);
-        if (!name.matches("^[\\p{L}\\s-]+$")) {
-            throw new InvalidParameterException(key + " is invalid (characters, spaces and '-' are only allowed)");
+        if (!name.matches("^[\\p{L}\\s\\-.]+$")) {
+            throw new InvalidParameterException(key + " is invalid (characters, spaces, '.' and '-' are only allowed)");
         }
         if (name.length() > 100) {
             throw new InvalidParameterException(key + " must contain no more than 100 letters");
+        }
+    }
+
+    public static void validatePointWinnerId(String id) {
+        if (!"0".equals(id) && !"1".equals(id)) {
+            throw new IllegalArgumentException("point winner id must be '0' or '1'.");
         }
     }
 }

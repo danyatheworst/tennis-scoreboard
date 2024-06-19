@@ -1,9 +1,13 @@
 package com.danyatheworst.match.score;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.danyatheworst.match.score.State.*;
 
 public class MatchScore extends Score<Integer> {
-    protected SetScore currentSet;
+    public SetScore currentSet;
+    public final List<SetScore> setsHistory = new ArrayList<>(3);
 
     public MatchScore() {
         this.currentSet = new SetScore();
@@ -29,6 +33,7 @@ public class MatchScore extends Score<Integer> {
         this.setPlayerScore(playerNumber, this.getPlayerScore(playerNumber) + 1);
         int playerScore = this.getPlayerScore(playerNumber);
         int oppositePlayerScore = this.getOppositePlayerScore(playerNumber);
+        this.setsHistory.add(this.currentSet);
         this.currentSet = new SetScore();
 
         if (playerScore == 2 && oppositePlayerScore <= 1) {

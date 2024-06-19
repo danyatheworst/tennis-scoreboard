@@ -1,14 +1,11 @@
 package com.danyatheworst.match.score;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.danyatheworst.match.score.State.*;
 
 public class SetScore extends Score<Integer> {
 
-    protected GameScore<?> currentGame;
-    protected final List<GameScore<?>> gamesHistory = new ArrayList<>();
+    public GameScore<?> currentGame;
 
     public SetScore() {
         this.currentGame = new RegularGameScore();
@@ -38,7 +35,6 @@ public class SetScore extends Score<Integer> {
         if (this.currentGame instanceof TieBreakScore ||
                 playerScore == 6 && oppositePlayerScore < 5 ||
                 playerScore == 7 && oppositePlayerScore == 5) {
-            this.gamesHistory.add(this.currentGame);
             this.currentGame = new RegularGameScore();
             return playerNumber == 0 ? PLAYER_ONE_WON : PLAYER_TWO_WON;
         }

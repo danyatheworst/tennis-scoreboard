@@ -14,7 +14,7 @@ abstract public class Score<T> {
         this.playerScores.add(this.getZeroScore());
     }
 
-    protected T getPlayerScore(int playerNumber) {
+    public T getPlayerScore(int playerNumber) {
         return this.playerScores.get(playerNumber);
     }
 
@@ -37,3 +37,5 @@ abstract public class Score<T> {
         }
     }
 }
+
+//TODO: add validation to setters!

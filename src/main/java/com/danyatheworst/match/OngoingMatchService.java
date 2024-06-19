@@ -2,11 +2,13 @@ package com.danyatheworst.match;
 
 import com.danyatheworst.exceptions.NotFoundException;
 import com.danyatheworst.player.Player;
+import com.danyatheworst.player.PlayerRepository;
 
 import java.util.UUID;
 
 public class OngoingMatchService {
     private final OngoingMatchRepository ongoingMatchRepository = new OngoingMatchRepository();
+    private final PlayerRepository playerRepository = new PlayerRepository();
 
     public Match getById(UUID uuid) {
         return this.ongoingMatchRepository
@@ -15,12 +17,15 @@ public class OngoingMatchService {
     }
 
     public UUID createNewMatch(CreateMatchRequestDto createMatchRequestDto) {
-        String playerName1 = createMatchRequestDto.getPlayerName1();
-        String playerName2 = createMatchRequestDto.getPlayerName2();
+        Player player1 = new Player(createMatchRequestDto.getPlayerName1());
+        Player player2 = new Player(createMatchRequestDto.getPlayerName2());
+
+        player1 = this.playerRepository.saveOrFindExisting(player1);
+        player2 = this.playerRepository.saveOrFindExisting(player2);
 
         Match ongoingMatch = new Match();
-        ongoingMatch.setPlayer1(new Player(playerName1));
-        ongoingMatch.setPlayer2(new Player(playerName2));
+        ongoingMatch.setPlayer1(player1);
+        ongoingMatch.setPlayer2(player2);
         return this.ongoingMatchRepository.save(ongoingMatch);
     }
 }

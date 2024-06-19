@@ -21,5 +21,7 @@ public class OngoingMatchesDB {
         return uuid;
     }
 
-    public static void remove(UUID uuid) {};
+    public static void remove(UUID uuid) {
+        instance.remove(uuid);
+    };
 }

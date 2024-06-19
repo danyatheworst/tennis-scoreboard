@@ -7,7 +7,7 @@ import static com.danyatheworst.match.score.State.*;
 public class RegularGameScore extends GameScore<Point> {
     @Override
     protected Point getZeroScore() {
-        return Point.NULL;
+        return Point.ZERO;
     }
 
     @Override

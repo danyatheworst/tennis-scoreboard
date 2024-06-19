@@ -20,7 +20,6 @@ public class NewMatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        System.out.println("doGet new match servlet");
         req.getRequestDispatcher("new-match.jsp").forward(req, resp);
     }
 
@@ -42,3 +41,5 @@ public class NewMatchServlet extends HttpServlet {
         }
     }
 }
+
+//TODO: not found link
