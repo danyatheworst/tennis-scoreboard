@@ -36,7 +36,7 @@ public class RegularGameScore extends GameScore<Point> {
                     return PLAYER_TWO_WON;
                 } else {
                     setOppositePlayerScore(playerNumber, FORTY);
-                    setPlayerScore(playerNumber, ADVANTAGE);
+                    setPlayerScore(playerNumber, FORTY);
                     return ONGOING;
                 }
             }
