@@ -2,6 +2,7 @@ package com.danyatheworst.utils;
 
 import com.danyatheworst.match.CreateMatchRequestDto;
 import com.danyatheworst.exceptions.InvalidParameterException;
+import com.danyatheworst.match.MatchesRequestDto;
 
 import java.util.Objects;
 
@@ -24,8 +25,8 @@ public final class Validation {
         }
     }
 
-    //TODO: key????
-    private static void validatePlayerName(String name, String key) {
+    //TODO: key???? replace with parameter?
+    public static void validatePlayerName(String name, String key) {
         validatePresence(name, key);
         if (!name.matches("^[\\p{L}\\s\\-.]+$")) {
             throw new InvalidParameterException(key + " is invalid (characters, spaces, '.' and '-' are only allowed)");
