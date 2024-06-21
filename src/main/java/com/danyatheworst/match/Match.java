@@ -20,19 +20,19 @@ import javax.persistence.*;
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+    public Long ID;
 
     @ManyToOne
     @JoinColumn(name = "player1_id", nullable = false)
-    private Player player1;
+    public Player player1;
 
     @ManyToOne
     @JoinColumn(name = "player2_id", nullable = false)
-    private Player player2;
+    public Player player2;
 
     @ManyToOne
     @JoinColumn(name = "winner_id", nullable = false)
-    private Player winner;
+    public Player winner;
 
     @Transient
     public MatchScore score = new MatchScore();

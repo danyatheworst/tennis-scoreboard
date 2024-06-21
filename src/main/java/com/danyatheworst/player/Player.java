@@ -15,10 +15,10 @@ import javax.persistence.*;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+    public Long ID;
 
     @Column(unique = true, nullable = false)
-    private String name;
+    public String name;
 
     public Player(String name) {
         this.name = name;

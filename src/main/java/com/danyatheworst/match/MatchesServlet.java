@@ -23,7 +23,6 @@ public class MatchesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = req.getParameter("page");
         String playerName = req.getParameter("filter_by_player_name");
-
         int pageNumber = parsePageNumberOrGetDefault(page);
         playerName = StringUtil.removeExtraSpaces(parsePlayerNameOrGetDefault(playerName));
         try {
@@ -34,7 +33,7 @@ public class MatchesServlet extends HttpServlet {
                     paginatedMatches.result, paginatedMatches.totalCount, pageNumber, lastPageNumber
             );
             req.setAttribute("matches", matchesResponseDto);
-            //req.getRequestDispatcher("/matches.jsp").forward(req, resp);
+            req.getRequestDispatcher("/matches.jsp").forward(req, resp);
         } catch (DatabaseOperationException e) {
 
         }
