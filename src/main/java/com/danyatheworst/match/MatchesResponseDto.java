@@ -7,7 +7,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MatchesResponseDto {
     public List<Match> matches;
-    long totalCount;
-    int currentPage;
-    int lastPageNumber;
+    public long totalCount;
+    public int currentPage;
+    public int pageSize;
 }

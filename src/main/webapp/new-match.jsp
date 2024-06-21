@@ -3,6 +3,7 @@
 
 <% ErrorResponseDto error = (ErrorResponseDto) request.getAttribute("error"); %>
 
+<!DOCTYPE html>
 <html>
   <head>
     <title>New match</title>

@@ -73,10 +73,15 @@
     %>
     </tbody>
 </table>
+<br/>
+<br/>
+<br/>
+<br/>
+<jsp:include page="pagination.jsp" />
 <%
 } else {
 %>
-<div class="no-matches">Сыгранных матчей пока нет</div>
+<div class="no-matches">no matches</div>
 <%
     }
 %>

@@ -27,10 +27,8 @@ public class MatchesServlet extends HttpServlet {
         playerName = StringUtil.removeExtraSpaces(parsePlayerNameOrGetDefault(playerName));
         try {
             Paginated<Match> paginatedMatches = this.matchRepository.findBy(pageNumber, DEFAULT_PAGE_SIZE, playerName);
-
-            int lastPageNumber = (int) ((paginatedMatches.totalCount + DEFAULT_PAGE_SIZE - 1) / DEFAULT_PAGE_SIZE);
             MatchesResponseDto matchesResponseDto = new MatchesResponseDto(
-                    paginatedMatches.result, paginatedMatches.totalCount, pageNumber, lastPageNumber
+                    paginatedMatches.result, paginatedMatches.totalCount, pageNumber, DEFAULT_PAGE_SIZE
             );
             req.setAttribute("matches", matchesResponseDto);
             req.getRequestDispatcher("/matches.jsp").forward(req, resp);
