@@ -77,7 +77,6 @@
 <br/>
 <br/>
 <br/>
-<jsp:include page="pagination.jsp" />
 <%
 } else {
 %>

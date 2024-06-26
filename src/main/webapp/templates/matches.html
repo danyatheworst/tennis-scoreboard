@@ -1,0 +1,57 @@
+<!-- @thymesVar id="matchesResponseDto" type="com.danyatheworst.match.MatchesResponseDto" -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Matches</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .winner {
+        color: green;
+        font-weight: bold;
+      }
+      .no-matches {
+        font-size: 18px;
+        color: red;
+        margin-top: 20px;
+      }
+    </style>
+</head>
+<body>
+<table th:if="${matchesResponseDto.matches.size() > 0}">
+  <thead>
+  <tr>
+    <th>Player 1</th>
+    <th>Player 2</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="match : ${matchesResponseDto.matches}">
+    <td>
+      <span th:text="${match.player1.name}"></span>
+      <span class="winner" th:if="${match.player1.ID == match.winner.ID}">✔</span>
+    </td>
+    <td>
+      <span th:text="${match.player2.name}"></span>
+      <span class="winner" th:if="${match.player2.ID == match.winner.ID}">✔</span>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div th:replace="~{pagination :: asd (${matchesResponseDto.totalCount}, ${matchesResponseDto.currentPage}, ${matchesResponseDto.pageSize})}"></div>
+<div th:if="${matchesResponseDto.matches.size() == 0}" class="no-matches">No matches</div>
+</body>
+</body>
+</html>

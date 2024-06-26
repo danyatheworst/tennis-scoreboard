@@ -1,0 +1,33 @@
+<div th:fragment="asd (totalCount, currentPage, pageSize)">
+    <div th:with="
+                  lastPage=${(totalCount + pageSize - 1) / pageSize},
+                  leftMost=${currentPage - 2 < 1 ? 1 : currentPage - 2},
+                  leftDots=${leftMost - 1 > 1},
+                  rightMost=${currentPage + 2 > lastPage ? lastPage : currentPage + 2},
+                  rightDots=${lastPage - rightMost > 1}">
+        <div class="pagination">
+            <a th:if="${currentPage > 1}"
+               th:href="@{?page=__${currentPage - 1}__}">LEFT-ARROW</a>
+            <a th:if="${leftMost != 1}"
+               th:href="@{?page=__${1}__}"
+               th:text="1"></a>
+            <a th:if="${leftDots}">LEFT-DOTS</a>
+            <a th:if="${leftMost <= currentPage - 1}"
+               th:each="i : ${#numbers.sequence(leftMost, currentPage - 1)}"
+               th:href="@{?page=__${i}__}"
+               th:text="${i}"></a>
+            <a th:text="${currentPage}" style="background: #45a049"></a>
+            <a th:if="${currentPage + 1 <= rightMost}"
+               th:each="i : ${#numbers.sequence(currentPage + 1, rightMost)}"
+               th:href="@{?page=__${i}__}"
+               th:text="${i}"></a>
+            <a th:if="${rightDots}">RIGHT-DOTS</a>
+            <a th:if="${rightMost != lastPage}" th:text="${lastPage}"
+               th:href="@{?page=__${lastPage}__}"
+            ></a>
+            <a th:if="${currentPage != lastPage}"
+               th:href="@{?page=__${currentPage + 1}__}"
+            >RIGHT-ARROW</a>
+        </div>
+    </div>
+</div>

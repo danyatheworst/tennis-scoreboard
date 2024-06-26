@@ -1,5 +1,6 @@
 package com.danyatheworst.match;
 
+import com.danyatheworst.ThymeleafRenderer;
 import com.danyatheworst.common.Paginated;
 import com.danyatheworst.exceptions.DatabaseOperationException;
 import com.danyatheworst.exceptions.InvalidParameterException;
@@ -10,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.thymeleaf.Thymeleaf;
 
 import java.io.IOException;
 
@@ -30,8 +32,10 @@ public class MatchesServlet extends HttpServlet {
             MatchesResponseDto matchesResponseDto = new MatchesResponseDto(
                     paginatedMatches.result, paginatedMatches.totalCount, pageNumber, DEFAULT_PAGE_SIZE
             );
-            req.setAttribute("matches", matchesResponseDto);
-            req.getRequestDispatcher("/matches.jsp").forward(req, resp);
+            ThymeleafRenderer.fromRequest(req, resp)
+                    .addVariableToContext("matchesResponseDto", matchesResponseDto)
+                    .build()
+                    .render("matches");
         } catch (DatabaseOperationException e) {
 
         }
