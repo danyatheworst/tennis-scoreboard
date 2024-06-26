@@ -1,4 +1,4 @@
-<div th:fragment="asd (totalCount, currentPage, pageSize)">
+<div th:fragment="pagination (totalCount, currentPage, pageSize)">
     <div th:with="
                   lastPage=${(totalCount + pageSize - 1) / pageSize},
                   leftMost=${currentPage - 2 < 1 ? 1 : currentPage - 2},

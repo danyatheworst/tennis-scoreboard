@@ -1,6 +1,7 @@
 package com.danyatheworst.match;
 
 import com.danyatheworst.ErrorResponseDto;
+import com.danyatheworst.ThymeleafRenderer;
 import com.danyatheworst.exceptions.DatabaseOperationException;
 import com.danyatheworst.exceptions.InvalidParameterException;
 import com.danyatheworst.utils.StringUtil;
@@ -19,12 +20,13 @@ public class NewMatchServlet extends HttpServlet {
     private final OngoingMatchService ongoingMatchService = new OngoingMatchService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.getRequestDispatcher("new-match.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //TODO: try-catch?
+        ThymeleafRenderer.renderFromRequest("new-match", req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String playerName1 = req.getParameter("playerName1");
         String playerName2 = req.getParameter("playerName2");
 
@@ -36,8 +38,10 @@ public class NewMatchServlet extends HttpServlet {
             String createdMatchUuid = this.ongoingMatchService.createNewMatch(createMatchRequestDto).toString();
             resp.sendRedirect("match-score?uuid=" + createdMatchUuid);
         } catch (InvalidParameterException | DatabaseOperationException e) {
-            req.setAttribute("error", new ErrorResponseDto(e.getMessage()));
-            req.getRequestDispatcher("new-match.jsp").forward(req, resp);
+            ThymeleafRenderer.fromRequest(req, resp)
+                    .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
+                    .build()
+                    .render("new-match");
         }
     }
 }

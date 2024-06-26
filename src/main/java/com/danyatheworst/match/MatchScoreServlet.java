@@ -1,6 +1,7 @@
 package com.danyatheworst.match;
 
 import com.danyatheworst.ErrorResponseDto;
+import com.danyatheworst.ThymeleafRenderer;
 import com.danyatheworst.exceptions.DatabaseOperationException;
 import com.danyatheworst.exceptions.InvalidParameterException;
 import com.danyatheworst.exceptions.NotFoundException;
@@ -32,21 +33,26 @@ public class MatchScoreServlet extends HttpServlet {
             Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
 
             MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.get(ongoingMatch));
-            req.setAttribute("matchScore", matchScoreViewDto);
-            req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
+            ThymeleafRenderer.fromRequest(req, resp)
+                    .addVariableToContext("matchScoreViewDto", matchScoreViewDto)
+                    .addVariableToContext("uuid", uuid)
+                    .build()
+                    .render("match-score");
         } catch (NotFoundException e) {
-            req.getRequestDispatcher("/not-found.jsp").forward(req, resp);
+            ThymeleafRenderer.renderFromRequest("not-found", req, resp);
         } catch (InvalidParameterException e) {
-            req.setAttribute("error", new ErrorResponseDto(e.getMessage()));
-            req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
+            ThymeleafRenderer.fromRequest(req, resp)
+                    .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
+                    .build()
+                    .render("match-score");
         } catch (DatabaseOperationException e) {
-            req.getRequestDispatcher("/internal-server.jsp").forward(req, resp);
+            ThymeleafRenderer.renderFromRequest("internal-server", req, resp);
         }
         //todo: filter??
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String uuid = req.getParameter("uuid");
         String pointWinnerId = req.getParameter("playerId");
 
@@ -64,18 +70,23 @@ public class MatchScoreServlet extends HttpServlet {
                 MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.get(ongoingMatch));
                 matchScoreViewDto.winnerId = winnerId;
 
-                req.setAttribute("matchScore", matchScoreViewDto);
-                req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
+                ThymeleafRenderer.fromRequest(req, resp)
+                        .addVariableToContext("matchScoreViewDto", matchScoreViewDto)
+                        .build()
+                        .render("match-score");
             } else {
                 resp.sendRedirect("match-score?uuid=" + uuid);
             }
         } catch (NotFoundException e) {
-            req.getRequestDispatcher("/not-found.jsp").forward(req, resp);
+            ThymeleafRenderer.renderFromRequest("not-found", req, resp);
         } catch (InvalidParameterException e) {
-            req.setAttribute("error", new ErrorResponseDto(e.getMessage()));
-            req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
+            ThymeleafRenderer.fromRequest(req, resp)
+                    .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
+                    .build()
+                    .render("match-score");
         } catch (DatabaseOperationException e) {
-            req.getRequestDispatcher("/internal-server.jsp").forward(req, resp);
+            ThymeleafRenderer.renderFromRequest("internal-server", req, resp);
+
         }
         //todo: filter??
     }

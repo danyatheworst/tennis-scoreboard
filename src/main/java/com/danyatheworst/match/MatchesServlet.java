@@ -22,7 +22,7 @@ public class MatchesServlet extends HttpServlet {
     private final static String DEFAULT_FILTER_BY_PLAYER_NAME = "";
     private final MatchRepository matchRepository = new MatchRepository();
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String page = req.getParameter("page");
         String playerName = req.getParameter("filter_by_player_name");
         int pageNumber = parsePageNumberOrGetDefault(page);

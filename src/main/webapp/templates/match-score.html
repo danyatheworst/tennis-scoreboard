@@ -1,0 +1,43 @@
+<!-- @thymesVar id="errorResponseDto" type="com.danyatheworst.ErrorResponseDto" -->
+<!-- @thymesVar id="matchScoreViewDto" type="com.danyatheworst.match.MatchScoreViewDto" -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Score</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/match-score.css}">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+</head>
+<body>
+
+<div th:if="${errorResponseDto != null}"
+     class="error-message">
+    <p th:text="${errorResponseDto.message}"></p>
+</div>
+
+<div th:if="${errorResponseDto == null}"
+        class="scoreboard">
+    <div th:each="player : ${matchScoreViewDto.players}"
+            class="player-row">
+        <div th:each="set : ${player.previousSets}"
+             class="score-box">
+            <span th:text="${set}"></span>
+        </div>
+        <div th:text="${player.name}"
+             class="player-name"></div>
+        <div th:text="${player.currentGame}"
+             class="score-box"></div>
+        <div th:text="${player.currentPoint}"
+             class="score-box"></div>
+        <form action="match-score" method="post">
+            <input type="hidden" name="uuid" th:value="${uuid}">
+            <input type="hidden" name="playerId" th:value="${player.id}">
+            <input type="submit" class="point-button" value="+" th:disabled="${matchScoreViewDto.winnerId != null}">
+        </form>
+    </div>
+</div>
+</body>
+</html>

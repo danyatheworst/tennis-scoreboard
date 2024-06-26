@@ -50,7 +50,7 @@
   </tbody>
 </table>
 
-<div th:replace="~{pagination :: asd (${matchesResponseDto.totalCount}, ${matchesResponseDto.currentPage}, ${matchesResponseDto.pageSize})}"></div>
+<div th:replace="~{fragments/pagination :: pagination (${matchesResponseDto.totalCount}, ${matchesResponseDto.currentPage}, ${matchesResponseDto.pageSize})}"></div>
 <div th:if="${matchesResponseDto.matches.size() == 0}" class="no-matches">No matches</div>
 </body>
 </body>
