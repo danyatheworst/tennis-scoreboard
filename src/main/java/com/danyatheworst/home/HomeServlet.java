@@ -1,6 +1,6 @@
 package com.danyatheworst.home;
 
-import com.danyatheworst.ThymeleafRenderer;
+import com.danyatheworst.common.ThymeleafRenderer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

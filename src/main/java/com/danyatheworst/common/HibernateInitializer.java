@@ -1,4 +1,4 @@
-package com.danyatheworst;
+package com.danyatheworst.common;
 
 import com.danyatheworst.utils.HibernateUtil;
 import jakarta.servlet.ServletContextEvent;
@@ -6,8 +6,6 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 import org.h2.tools.Server;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @WebListener

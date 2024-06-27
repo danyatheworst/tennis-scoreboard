@@ -1,6 +1,4 @@
-package com.danyatheworst;
-
-import lombok.AllArgsConstructor;
+package com.danyatheworst.common;
 
 
 public class ErrorResponseDto {

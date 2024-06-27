@@ -1,11 +1,12 @@
 package com.danyatheworst.match;
 
-import com.danyatheworst.ErrorResponseDto;
-import com.danyatheworst.ThymeleafRenderer;
+import com.danyatheworst.common.ErrorResponseDto;
+import com.danyatheworst.common.ThymeleafRenderer;
 import com.danyatheworst.exceptions.InvalidParameterException;
 import com.danyatheworst.match.dto.MatchScoreViewDto;
 import com.danyatheworst.match.score.*;
 import com.danyatheworst.player.PlayerScoreDto;
+import com.danyatheworst.utils.PointUtil;
 import com.danyatheworst.utils.Validation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -95,13 +96,7 @@ public class MatchScoreServlet extends HttpServlet {
 
     private String getPointRepresentation(Integer id, GameScore<?> gameScore) {
         if (gameScore instanceof RegularGameScore) {
-            return switch ((Point) gameScore.getPlayerScore(id)) {
-                case ZERO -> "0";
-                case FIFTEEN -> "15";
-                case THIRTY -> "30";
-                case FORTY -> "40";
-                case ADVANTAGE -> "AD";
-            };
+            return PointUtil.getString((Point) gameScore.getPlayerScore(id));
         } else {
             return gameScore.getPlayerScore(id).toString();
         }

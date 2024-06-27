@@ -1,7 +1,7 @@
 package com.danyatheworst.match;
 
-import com.danyatheworst.ErrorResponseDto;
-import com.danyatheworst.ThymeleafRenderer;
+import com.danyatheworst.common.ErrorResponseDto;
+import com.danyatheworst.common.ThymeleafRenderer;
 import com.danyatheworst.exceptions.InvalidParameterException;
 import com.danyatheworst.match.dto.CreateMatchRequestDto;
 import com.danyatheworst.utils.StringUtil;

@@ -5,13 +5,13 @@ import com.danyatheworst.match.score.Point;
 
 
 public class PointUtil {
-    public static String getString(Point point) throws Exception {
+    public static String getString(Point point) {
         return switch (point) {
+            case ZERO -> "0";
             case FIFTEEN -> "15";
             case THIRTY -> "30";
             case FORTY -> "40";
             case ADVANTAGE -> "AD";
-            default -> throw new DatabaseOperationException("something wrong happened");
         };
     }
 }

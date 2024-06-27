@@ -1,6 +1,6 @@
 package com.danyatheworst.match;
 
-import com.danyatheworst.ThymeleafRenderer;
+import com.danyatheworst.common.ThymeleafRenderer;
 import com.danyatheworst.common.Paginated;
 import com.danyatheworst.exceptions.InvalidParameterException;
 import com.danyatheworst.match.dto.MatchesResponseDto;
