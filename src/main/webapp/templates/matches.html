@@ -29,6 +29,14 @@
     </style>
 </head>
 <body>
+<form action="matches" method="get">
+  <label for="playerName">Enter player name:</label>
+    <input id="playerName" type="text" name="filter_by_player_name" placeholder="Enter player name" required>
+  <button type="submit">Search</button>
+</form>
+<a th:href="@{matches}"
+   th:if="${param.filter_by_player_name != null}">clear filter</a>
+<br/>
 <table th:if="${matchesResponseDto.matches.size() > 0}">
   <thead>
   <tr>
@@ -50,7 +58,8 @@
   </tbody>
 </table>
 
-<div th:replace="~{fragments/pagination :: pagination (${matchesResponseDto.totalCount}, ${matchesResponseDto.currentPage}, ${matchesResponseDto.pageSize})}"></div>
+<div th:replace="~{fragments/pagination :: pagination
+(${matchesResponseDto.totalCount}, ${matchesResponseDto.currentPage}, ${matchesResponseDto.pageSize})}"></div>
 <div th:if="${matchesResponseDto.matches.size() == 0}" class="no-matches">No matches</div>
 </body>
 </body>

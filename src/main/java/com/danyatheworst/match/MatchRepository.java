@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MatchRepository {
 
-    public Paginated<Match> findBy(int pageNumber, int pageSize, String filterAlike) {
+    public Paginated<Match> find(int pageNumber, int pageSize, String filterAlike) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -44,8 +44,6 @@ public class MatchRepository {
             throw new DatabaseOperationException("Failed to read matches in the database");
         }
     }
-
-
 
     public void save(Match match) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

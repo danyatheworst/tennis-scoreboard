@@ -6,12 +6,10 @@ import com.danyatheworst.exceptions.DatabaseOperationException;
 import com.danyatheworst.exceptions.InvalidParameterException;
 import com.danyatheworst.utils.StringUtil;
 import com.danyatheworst.utils.Validation;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.thymeleaf.Thymeleaf;
 
 import java.io.IOException;
 
@@ -28,7 +26,7 @@ public class MatchesServlet extends HttpServlet {
         int pageNumber = parsePageNumberOrGetDefault(page);
         playerName = StringUtil.removeExtraSpaces(parsePlayerNameOrGetDefault(playerName));
         try {
-            Paginated<Match> paginatedMatches = this.matchRepository.findBy(pageNumber, DEFAULT_PAGE_SIZE, playerName);
+            Paginated<Match> paginatedMatches = this.matchRepository.find(pageNumber, DEFAULT_PAGE_SIZE, playerName);
             MatchesResponseDto matchesResponseDto = new MatchesResponseDto(
                     paginatedMatches.result, paginatedMatches.totalCount, pageNumber, DEFAULT_PAGE_SIZE
             );
