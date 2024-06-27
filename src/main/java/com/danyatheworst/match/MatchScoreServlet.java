@@ -2,9 +2,8 @@ package com.danyatheworst.match;
 
 import com.danyatheworst.ErrorResponseDto;
 import com.danyatheworst.ThymeleafRenderer;
-import com.danyatheworst.exceptions.DatabaseOperationException;
 import com.danyatheworst.exceptions.InvalidParameterException;
-import com.danyatheworst.exceptions.NotFoundException;
+import com.danyatheworst.match.dto.MatchScoreViewDto;
 import com.danyatheworst.match.score.*;
 import com.danyatheworst.player.PlayerScoreDto;
 import com.danyatheworst.utils.Validation;
@@ -32,23 +31,18 @@ public class MatchScoreServlet extends HttpServlet {
             Validation.validatePresence(uuid, "uuid");
             Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
 
-            MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.get(ongoingMatch));
+            MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
             ThymeleafRenderer.fromRequest(req, resp)
                     .addVariableToContext("matchScoreViewDto", matchScoreViewDto)
                     .addVariableToContext("uuid", uuid)
                     .build()
                     .render("match-score");
-        } catch (NotFoundException e) {
-            ThymeleafRenderer.renderFromRequest("not-found", req, resp);
         } catch (InvalidParameterException e) {
             ThymeleafRenderer.fromRequest(req, resp)
                     .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
                     .build()
                     .render("match-score");
-        } catch (DatabaseOperationException e) {
-            ThymeleafRenderer.renderFromRequest("internal-server", req, resp);
         }
-        //todo: filter??
     }
 
     @Override
@@ -67,7 +61,7 @@ public class MatchScoreServlet extends HttpServlet {
                 int winnerId = state == State.PLAYER_ONE_WON ? 0 : 1;
                 
                 this.finishedMatchSaverService.save(ongoingMatch, winnerId, this.fromString(uuid));
-                MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.get(ongoingMatch));
+                MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
                 matchScoreViewDto.winnerId = winnerId;
 
                 ThymeleafRenderer.fromRequest(req, resp)
@@ -77,18 +71,12 @@ public class MatchScoreServlet extends HttpServlet {
             } else {
                 resp.sendRedirect("match-score?uuid=" + uuid);
             }
-        } catch (NotFoundException e) {
-            ThymeleafRenderer.renderFromRequest("not-found", req, resp);
         } catch (InvalidParameterException e) {
             ThymeleafRenderer.fromRequest(req, resp)
                     .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
                     .build()
                     .render("match-score");
-        } catch (DatabaseOperationException e) {
-            ThymeleafRenderer.renderFromRequest("internal-server", req, resp);
-
         }
-        //todo: filter??
     }
 
     private UUID fromString(String string) {
@@ -102,25 +90,7 @@ public class MatchScoreServlet extends HttpServlet {
         }
     }
 
-    private PlayerScoreDto get(Integer playerId, String playerName, MatchScore matchScore) {
-        List<String> previousSets = new ArrayList<>(3);
-        List<SetScore> setsHistory = matchScore.setsHistory;
-        for (SetScore setScore : setsHistory) {
-            previousSets.add(setScore.getPlayerScore(playerId).toString());
-        }
-        for (int i = previousSets.size(); i < 3; i++) {
-            previousSets.add("0");
-        }
-        return new PlayerScoreDto(
-                playerId,
-                playerName,
-                matchScore.currentSet.getPlayerScore(playerId).toString(),
-                this.getPoint(playerId, matchScore.currentSet.currentGame),
-                previousSets
-        );
-    }
-
-    private String getPoint(Integer id, GameScore<?> gameScore) {
+    private String getPointRepresentation(Integer id, GameScore<?> gameScore) {
         if (gameScore instanceof RegularGameScore) {
             return switch ((Point) gameScore.getPlayerScore(id)) {
                 case ZERO -> "0";
@@ -134,10 +104,28 @@ public class MatchScoreServlet extends HttpServlet {
         }
     }
 
-    private List<PlayerScoreDto> get(Match ongoingMatch) {
+    private PlayerScoreDto map(Integer playerId, String playerName, MatchScore matchScore) {
+        List<String> previousSets = new ArrayList<>(3);
+        List<SetScore> setsHistory = matchScore.setsHistory;
+        for (SetScore setScore : setsHistory) {
+            previousSets.add(setScore.getPlayerScore(playerId).toString());
+        }
+        for (int i = previousSets.size(); i < 3; i++) {
+            previousSets.add("0");
+        }
+        return new PlayerScoreDto(
+                playerId,
+                playerName,
+                matchScore.currentSet.getPlayerScore(playerId).toString(),
+                this.getPointRepresentation(playerId, matchScore.currentSet.currentGame),
+                previousSets
+        );
+    }
+
+    private List<PlayerScoreDto> map(Match ongoingMatch) {
         List<PlayerScoreDto> players = new ArrayList<>();
-        players.add(this.get(0, ongoingMatch.getPlayer1().getName(), ongoingMatch.score));
-        players.add(this.get(1, ongoingMatch.getPlayer2().getName(), ongoingMatch.score));
+        players.add(this.map(0, ongoingMatch.getPlayer1().getName(), ongoingMatch.score));
+        players.add(this.map(1, ongoingMatch.getPlayer2().getName(), ongoingMatch.score));
         return players;
     }
 }

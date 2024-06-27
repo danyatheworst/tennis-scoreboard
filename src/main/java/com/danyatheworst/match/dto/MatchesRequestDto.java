@@ -1,4 +1,4 @@
-package com.danyatheworst.match;
+package com.danyatheworst.match.dto;
 
 public class MatchesRequestDto {
     public int pageNumber;

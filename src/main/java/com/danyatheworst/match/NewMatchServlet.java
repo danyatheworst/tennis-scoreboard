@@ -2,12 +2,10 @@ package com.danyatheworst.match;
 
 import com.danyatheworst.ErrorResponseDto;
 import com.danyatheworst.ThymeleafRenderer;
-import com.danyatheworst.exceptions.DatabaseOperationException;
 import com.danyatheworst.exceptions.InvalidParameterException;
+import com.danyatheworst.match.dto.CreateMatchRequestDto;
 import com.danyatheworst.utils.StringUtil;
 import com.danyatheworst.utils.Validation;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +19,6 @@ public class NewMatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        //TODO: try-catch?
         ThymeleafRenderer.renderFromRequest("new-match", req, resp);
     }
 
@@ -37,7 +34,7 @@ public class NewMatchServlet extends HttpServlet {
 
             String createdMatchUuid = this.ongoingMatchService.createNewMatch(createMatchRequestDto).toString();
             resp.sendRedirect("match-score?uuid=" + createdMatchUuid);
-        } catch (InvalidParameterException | DatabaseOperationException e) {
+        } catch (InvalidParameterException e) {
             ThymeleafRenderer.fromRequest(req, resp)
                     .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
                     .build()

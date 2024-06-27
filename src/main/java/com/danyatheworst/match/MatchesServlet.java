@@ -2,8 +2,8 @@ package com.danyatheworst.match;
 
 import com.danyatheworst.ThymeleafRenderer;
 import com.danyatheworst.common.Paginated;
-import com.danyatheworst.exceptions.DatabaseOperationException;
 import com.danyatheworst.exceptions.InvalidParameterException;
+import com.danyatheworst.match.dto.MatchesResponseDto;
 import com.danyatheworst.utils.StringUtil;
 import com.danyatheworst.utils.Validation;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,18 +25,15 @@ public class MatchesServlet extends HttpServlet {
         String playerName = req.getParameter("filter_by_player_name");
         int pageNumber = parsePageNumberOrGetDefault(page);
         playerName = StringUtil.removeExtraSpaces(parsePlayerNameOrGetDefault(playerName));
-        try {
-            Paginated<Match> paginatedMatches = this.matchRepository.find(pageNumber, DEFAULT_PAGE_SIZE, playerName);
-            MatchesResponseDto matchesResponseDto = new MatchesResponseDto(
-                    paginatedMatches.result, paginatedMatches.totalCount, pageNumber, DEFAULT_PAGE_SIZE
-            );
-            ThymeleafRenderer.fromRequest(req, resp)
-                    .addVariableToContext("matchesResponseDto", matchesResponseDto)
-                    .build()
-                    .render("matches");
-        } catch (DatabaseOperationException e) {
 
-        }
+        Paginated<Match> paginatedMatches = this.matchRepository.find(pageNumber, DEFAULT_PAGE_SIZE, playerName);
+        MatchesResponseDto matchesResponseDto = new MatchesResponseDto(
+                paginatedMatches.result, paginatedMatches.totalCount, pageNumber, DEFAULT_PAGE_SIZE
+        );
+        ThymeleafRenderer.fromRequest(req, resp)
+                .addVariableToContext("matchesResponseDto", matchesResponseDto)
+                .build()
+                .render("matches");
     }
 
 

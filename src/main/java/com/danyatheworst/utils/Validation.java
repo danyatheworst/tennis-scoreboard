@@ -1,8 +1,7 @@
 package com.danyatheworst.utils;
 
-import com.danyatheworst.match.CreateMatchRequestDto;
+import com.danyatheworst.match.dto.CreateMatchRequestDto;
 import com.danyatheworst.exceptions.InvalidParameterException;
-import com.danyatheworst.match.MatchesRequestDto;
 
 import java.util.Objects;
 
