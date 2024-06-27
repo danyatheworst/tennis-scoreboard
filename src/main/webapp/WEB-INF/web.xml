@@ -4,8 +4,6 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <!-- Other configurations -->
-
     <error-page>
         <error-code>404</error-code>
         <location>/templates/not-found.html</location>

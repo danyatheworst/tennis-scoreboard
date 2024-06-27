@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+
 @WebServlet(name = "MatchScoreServlet", urlPatterns = "/match-score")
 public class MatchScoreServlet extends HttpServlet {
     private final OngoingMatchService ongoingMatchService = new OngoingMatchService();
@@ -72,6 +74,7 @@ public class MatchScoreServlet extends HttpServlet {
                 resp.sendRedirect("match-score?uuid=" + uuid);
             }
         } catch (InvalidParameterException e) {
+            resp.setStatus(SC_BAD_REQUEST);
             ThymeleafRenderer.fromRequest(req, resp)
                     .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
                     .build()

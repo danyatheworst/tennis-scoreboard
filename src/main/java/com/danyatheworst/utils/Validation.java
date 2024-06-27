@@ -18,20 +18,20 @@ public final class Validation {
         validatePlayerName(playerName2, "playerName2");
     }
 
-    public static void validatePresence(String value, String key) {
+    public static void validatePresence(String value, String paramName) {
         if (value == null || value.isBlank()) {
-            throw new InvalidParameterException(key + " is missing");
+            throw new InvalidParameterException(paramName + " is missing");
         }
     }
 
-    //TODO: key???? replace with parameter?
-    public static void validatePlayerName(String name, String key) {
-        validatePresence(name, key);
+    //TODO: paramName???? replace with parameter?
+    public static void validatePlayerName(String name, String paramName) {
+        validatePresence(name, paramName);
         if (!name.matches("^[\\p{L}\\s\\-.]+$")) {
-            throw new InvalidParameterException(key + " is invalid (characters, spaces, '.' and '-' are only allowed)");
+            throw new InvalidParameterException(paramName + " is invalid (characters, spaces, '.' and '-' are only allowed)");
         }
         if (name.length() > 100) {
-            throw new InvalidParameterException(key + " must contain no more than 100 letters");
+            throw new InvalidParameterException(paramName + " must contain no more than 100 letters");
         }
     }
 

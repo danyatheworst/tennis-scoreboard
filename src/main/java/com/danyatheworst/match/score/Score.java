@@ -37,5 +37,3 @@ abstract public class Score<T> {
         }
     }
 }
-
-//TODO: add validation to setters!
