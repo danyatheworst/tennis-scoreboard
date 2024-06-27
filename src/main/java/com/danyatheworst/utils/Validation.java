@@ -14,8 +14,8 @@ public final class Validation {
             throw new InvalidParameterException("Players' names must be unique");
         }
 
-        validatePlayerName(playerName1, "playerName1");
-        validatePlayerName(playerName2, "playerName2");
+        validatePlayerName(playerName1, "player name 1");
+        validatePlayerName(playerName2, "player name 2");
     }
 
     public static void validatePresence(String value, String paramName) {
@@ -24,7 +24,6 @@ public final class Validation {
         }
     }
 
-    //TODO: paramName???? replace with parameter?
     public static void validatePlayerName(String name, String paramName) {
         validatePresence(name, paramName);
         if (!name.matches("^[\\p{L}\\s\\-.]+$")) {

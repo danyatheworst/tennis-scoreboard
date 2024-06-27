@@ -42,5 +42,3 @@ public class NewMatchServlet extends HttpServlet {
         }
     }
 }
-
-//TODO: not found link
