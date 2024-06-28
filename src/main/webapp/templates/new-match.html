@@ -1,25 +1,40 @@
 <!-- @thymesVar id="errorResponseDto" type="com.danyatheworst.common.ErrorResponseDto" -->
 
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <title>New match</title>
     <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <link rel="stylesheet" th:href="@{/css/error.css}">
-  </head>
-  <body>
-  <form id="new-match" action="new-match" method="post">
-    <label for="playerName1">player name 1:</label>
-    <input type="text" id="playerName1" name="playerName1" required><br><br>
+</head>
+<body>
+<div class="container">
+    <form id="new-match" action="new-match" method="post">
+        <label for="playerName1">player name 1:</label>
+        <input  class="input"
+                id="playerName1"
+                type="text"
+                name="playerName1"
+                placeholder="enter player1 name"
+                required>
+        <br/>
+        <label for="playerName2">player name 2:</label>
+        <input  class="input"
+                id="playerName2"
+                type="text"
+                placeholder="enter player2 name"
+                name="playerName2"
+                required>
+        <br/>
 
-    <label for="playerName2">player name 2:</label>
-    <input type="text" id="playerName2" name="playerName2" required><br><br>
-
-    <button type="submit">Submit</button>
-    <p th:if="${errorResponseDto != null}"
-       th:text="${errorResponseDto.message}"
-       class="error-message"></p>
-  </form>
-  </body>
+        <button class="button"
+                type="submit">Submit</button>
+        <p th:if="${errorResponseDto != null}"
+           th:text="${errorResponseDto.message}"
+           class="error-message"></p>
+    </form>
+</div>
+</body>
 </html>
 
