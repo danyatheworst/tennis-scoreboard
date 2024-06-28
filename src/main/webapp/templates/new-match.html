@@ -1,39 +1,59 @@
 <!-- @thymesVar id="errorResponseDto" type="com.danyatheworst.common.ErrorResponseDto" -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>New match</title>
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
-    <link rel="stylesheet" th:href="@{/css/error.css}">
+    <link rel="stylesheet" th:href="@{/css/new-match.css}">
+    <link rel="stylesheet" th:href="@{/css/error-message.css}">
+    <meta charset="UTF-8">
 </head>
 <body>
 <div class="container">
-    <form id="new-match" action="new-match" method="post">
-        <label for="playerName1">player name 1:</label>
-        <input  class="input"
-                id="playerName1"
-                type="text"
-                name="playerName1"
-                placeholder="enter player1 name"
-                required>
-        <br/>
-        <label for="playerName2">player name 2:</label>
-        <input  class="input"
-                id="playerName2"
-                type="text"
-                placeholder="enter player2 name"
-                name="playerName2"
-                required>
-        <br/>
+    <div class="wrapper">
+        <div class="new-match border-primary">
+            <h2>New match</h2>
+            <form
+                    id="new-match"
+                    action="new-match"
+                    method="post"
+            >
+                <div class="player-row">
+                    <label for="playerName1">Player 1 name:</label>
+                    <input class="input"
+                           id="playerName1"
+                           type="text"
+                           name="playerName1"
+                           placeholder="enter player1 name"
+                           required
+                    >
+                </div>
+                <div class="player-row">
+                    <label for="playerName2">Player 2 name:</label>
+                    <input class="input"
+                           id="playerName2"
+                           type="text"
+                           placeholder="enter player2 name"
+                           name="playerName2"
+                           required
+                    >
+                </div>
 
-        <button class="button"
-                type="submit">Submit</button>
-        <p th:if="${errorResponseDto != null}"
-           th:text="${errorResponseDto.message}"
-           class="error-message"></p>
-    </form>
+                <th:block th:if="${errorResponseDto != null}">
+                    <th:block th:replace="~{fragments/error-message :: error-message (${errorResponseDto.message})}"
+                    ></th:block>
+                </th:block>
+
+                <button class="button"
+                        type="submit"
+                >
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>

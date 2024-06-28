@@ -1,0 +1,33 @@
+.new-match {
+    padding: 1.7rem;
+    max-width: 462px;
+}
+
+.new-match h2 {
+    font-weight: 600;
+    font-size: 25px;
+    margin-bottom: 1.4rem;
+    text-align: center;
+}
+
+.new-match button {
+    margin-left: auto;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.player-row {
+    margin-bottom: 1.35rem;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.player-row label {
+    margin-right: 0.4rem;
+}
+
