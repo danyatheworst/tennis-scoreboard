@@ -8,35 +8,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match Score</title>
     <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <link rel="stylesheet" th:href="@{/css/match-score.css}">
-    <link rel="stylesheet" th:href="@{/css/error-message.css}">
 </head>
 <body>
 
-<div th:if="${errorResponseDto != null}"
-     class="error-message">
-    <p th:text="${errorResponseDto.message}"></p>
-</div>
-
-<div th:if="${errorResponseDto == null}"
-        class="scoreboard">
-    <div th:each="player : ${matchScoreViewDto.players}"
-            class="player-row">
-        <div th:each="set : ${player.previousSets}"
-             class="score-box">
-            <span th:text="${set}"></span>
+<div class="container">
+    <div class="wrapper">
+        <div class="scoreboard border-primary">
+            <table>
+                <tr>
+                    <th>Previous sets</th>
+                    <th>Player name</th>
+                    <th>Game</th>
+                    <th>Points</th>
+                    <th></th>
+                </tr>
+                <tr th:each="player : ${matchScoreViewDto.players}">
+                    <td class="previous-sets">
+                        <div th:each="set : ${player.previousSets}"
+                             class="score-box border-primary"
+                        >
+                            <span th:text="${set}"
+                            ></span>
+                        </div>
+                    </td>
+                    <td>
+                        <span th:text="${player.name}"
+                              class="player-name"
+                        ></span>
+                    </td>
+                    <td>
+                        <span th:text="${player.currentGame}"
+                             class="score-box border-primary"
+                        ></span>
+                    </td>
+                    <td>
+                        <div th:text="${player.currentPoint}"
+                             class="score-box border-primary"
+                        ></div>
+                    </td>
+                    <td>
+                        <form action="match-score" method="post">
+                            <input th:value="${uuid}"
+                                   type="hidden"
+                                   name="uuid"
+                            >
+                            <input th:value="${player.id}"
+                                   type="hidden"
+                                   name="playerId"
+                            >
+                            <button th:disabled="${matchScoreViewDto.winnerId != null}"
+                                    class="button-primary point-button"
+                                    type="submit"
+                            >+
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            <div th:if="${matchScoreViewDto.winnerId != null}"
+                 class="finished-match"
+            >
+                <p>
+                    <span th:text="${matchScoreViewDto.players.get(matchScoreViewDto.winnerId).name}"></span>
+                    is winner
+                </p>
+                <div>
+                    <a th:href="@{/}"
+                       class="button-secondary"
+                    >
+                        Go gome
+                    </a>
+                    <a th:href="@{matches}"
+                       class="button-primary"
+                    >
+                        Finished matches
+                    </a>
+                </div>
+            </div>
         </div>
-        <div th:text="${player.name}"
-             class="player-name"></div>
-        <div th:text="${player.currentGame}"
-             class="score-box"></div>
-        <div th:text="${player.currentPoint}"
-             class="score-box"></div>
-        <form action="match-score" method="post">
-            <input type="hidden" name="uuid" th:value="${uuid}">
-            <input type="hidden" name="playerId" th:value="${player.id}">
-            <input type="submit" class="point-button" value="+" th:disabled="${matchScoreViewDto.winnerId != null}">
-        </form>
     </div>
 </div>
 </body>

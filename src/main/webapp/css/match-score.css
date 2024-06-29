@@ -1,32 +1,23 @@
-html {
-    font-size: 16px;
-}
-
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-}
-
 .scoreboard {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    background-color: #fff;
+    background-color: var(--color-secondary);
     padding: 1.25rem;
-    border-radius: 0.625rem;
-    box-shadow: 0 0 0.9375rem rgba(0, 0, 0, 0.1);
 }
 
+.scoreboard table {
+    border-spacing: 5px;
+}
 
-.player-row {
+.scoreboard th, .scoreboard td {
+    padding: 5px;
+    text-align: center;
+}
+
+.previous-sets {
     display: flex;
-    align-items: center;
-    gap: 0.625rem;
+}
+
+.previous-sets div:not(:last-child) {
+    margin-right: 0.5rem;
 }
 
 .score-box {
@@ -35,48 +26,49 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e0e0e0;
+    background-color: var(--color-secondary);
     border-radius: 0.3125rem;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #333;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-font);
 }
 
-.player-row, .score-box {
+.score-box {
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
 }
 
-/* разобраться с максимальным контентом который может быть показан (обрезание текста или уменьшение шрифта) */
+/* разобраться с максимальным контентом, который может быть показан (обрезание текста или уменьшение шрифта) */
 .player-name {
-    flex: 1;
-    text-align: center;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #333;
-    max-width: 18.75rem;
-    min-width: 6.25rem;
-    /* white-space: nowrap;
+    max-width: 13rem;
     overflow: hidden;
-    text-overflow: ellipsis; */
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .point-button {
     width: 3.125rem;
+    min-width: 3.125rem;
     height: 3.125rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1.25rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.3125rem;
-    transition: background-color 0.3s, transform 0.1s;
 }
 
-.point-button:hover {
-    background-color: #45a049;
+.finished-match {
+    margin-top: 1.25rem;
+}
+
+.finished-match p {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+
+.finished-match span {
+    font-weight: 600;
+}
+
+.finished-match div {
+    display: flex;
+    justify-content: space-between;
 }
