@@ -4,60 +4,105 @@
                   leftMost=${currentPage - 2 < 1 ? 1 : currentPage - 2},
                   leftDots=${leftMost - 1 > 1},
                   rightMost=${currentPage + 2 > lastPage ? lastPage : currentPage + 2},
-                  rightDots=${lastPage - rightMost > 1}">
-        <div class="pagination">
-            <a th:if="${currentPage > 1 && param.filter_by_player_name != null}"
-               th:href="@{matches(page=${currentPage - 1}, filter_by_player_name=${param.filter_by_player_name})}">
-                LEFT-ARROW</a>
-            <a th:if="${currentPage > 1 && param.filter_by_player_name == null}"
-               th:href="@{matches(page=${currentPage - 1})}">LEFT-ARROW</a>
-
-            <a th:if="${leftMost != 1 && param.filter_by_player_name != null}"
-               th:href="@{/matches(page=1, filter_by_player_name=${param.filter_by_player_name})}"
-               th:text="1"></a>
-            <a th:if="${leftMost != 1 && param.filter_by_player_name == null}"
-               th:href="@{?page=__${1}__}"
-               th:text="1"></a>
-
-            <a th:if="${leftDots}">LEFT-DOTS</a>
-
-            <a th:if="${leftMost <= currentPage - 1 && param.filter_by_player_name != null}"
-               th:each="i : ${#numbers.sequence(leftMost, currentPage - 1)}"
-               th:href="@{matches(page=${i}, filter_by_player_name=${param.filter_by_player_name})}"
-               th:text="${i}"></a>
-            <a th:if="${leftMost <= currentPage - 1 && param.filter_by_player_name == null}"
-               th:each="i : ${#numbers.sequence(leftMost, currentPage - 1)}"
-               th:href="@{?page=__${i}__}"
-               th:text="${i}"></a>
-
-            <a th:text="${currentPage}" style="background: #45a049"></a>
-
-            <a th:if="${currentPage + 1 <= rightMost && param.filter_by_player_name != null}"
-               th:each="i : ${#numbers.sequence(currentPage + 1, rightMost)}"
-               th:href="@{/matches(page=${i}, filter_by_player_name=${param.filter_by_player_name})}"
-               th:text="${i}"></a>
-            <a th:if="${currentPage + 1 <= rightMost && param.filter_by_player_name == null}"
-               th:each="i : ${#numbers.sequence(currentPage + 1, rightMost)}"
-               th:href="@{?page=__${i}__}"
-               th:text="${i}"></a>
-
-            <a th:if="${rightDots}">RIGHT-DOTS</a>
-
-            <a th:if="${rightMost != lastPage && param.filter_by_player_name != null}"
-               th:text="${lastPage}"
-               th:href="@{matches(page=${lastPage}, filter_by_player_name=${param.filter_by_player_name})}"
-            ></a>
-            <a th:if="${rightMost != lastPage && param.filter_by_player_name == null}"
-               th:text="${lastPage}"
-               th:href="@{matches(page=${lastPage})}"
-            ></a>
-
-            <a th:if="${currentPage != lastPage && param.filter_by_player_name != null}"
-               th:href="@{matches(page=${currentPage + 1}, filter_by_player_name=${param.filter_by_player_name})}"
-            >RIGHT-ARROW</a>
-            <a th:if="${currentPage != lastPage && param.filter_by_player_name == null}"
-               th:href="@{matches(page=${currentPage + 1})}"
-            >RIGHT-ARROW</a>
-        </div>
+                  rightDots=${lastPage - rightMost > 1}"
+         class="wrapper"
+    >
+        <ul class="pagination">
+            <li th:if="${currentPage > 1 && param.filter_by_player_name != null}">
+                <a th:href="@{matches(page=${currentPage - 1}, filter_by_player_name=${param.filter_by_player_name})}"
+                   class="button-secondary button-pagination"
+                >
+                    <div th:include="~{fragments/arrows/left-arrow}"></div>
+                </a>
+            </li>
+            <li th:if="${currentPage > 1 && param.filter_by_player_name == null}">
+                <a th:href="@{matches(page=${currentPage - 1})}"
+                   class="button-secondary button-pagination"
+                >
+                    <div th:include="~{fragments/arrows/left-arrow}"></div>
+                </a>
+            </li>
+            <li th:if="${leftMost != 1 && param.filter_by_player_name != null}">
+                <a th:href="@{/matches(page=1, filter_by_player_name=${param.filter_by_player_name})}"
+                   th:text="1"
+                   class="button-secondary button-pagination"
+                ></a>
+            </li>
+            <li th:if="${leftMost != 1 && param.filter_by_player_name == null}">
+                <a th:href="@{?page=__${1}__}"
+                   th:text="1"
+                   class="button-secondary button-pagination"
+                ></a>
+            </li>
+            <li th:if="${leftDots}">
+                <div class="dots">...</div>
+            </li>
+            <li th:each="i : ${#numbers.sequence(leftMost, currentPage - 1)}"
+                th:if="${leftMost <= currentPage - 1 && param.filter_by_player_name != null}"
+            >
+                <a th:href="@{matches(page=${i}, filter_by_player_name=${param.filter_by_player_name})}"
+                   th:text="${i}"
+                   class="button-secondary button-pagination"
+                ></a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(leftMost, currentPage - 1)}"
+                th:if="${leftMost <= currentPage - 1 && param.filter_by_player_name == null}"
+            >
+                <a th:href="@{?page=__${i}__}"
+                   th:text="${i}"
+                   class="button-secondary button-pagination"
+                ></a>
+            </li>
+            <li>
+                <a th:text="${currentPage}"
+                   class="button-primary button-pagination"
+                ></a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(currentPage + 1, rightMost)}"
+                th:if="${currentPage + 1 <= rightMost && param.filter_by_player_name != null}"
+            >
+                <a th:href="@{/matches(page=${i}, filter_by_player_name=${param.filter_by_player_name})}"
+                   th:text="${i}"
+                   class="button-secondary button-pagination"
+                ></a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(currentPage + 1, rightMost)}"
+                th:if="${currentPage + 1 <= rightMost && param.filter_by_player_name == null}"
+            >
+                <a th:href="@{?page=__${i}__}"
+                   th:text="${i}"
+                   class="button-secondary button-pagination"
+                ></a>
+            </li>
+            <li th:if="${rightDots}">
+                <div class="dots">...</div>
+            </li>
+            <li th:if="${rightMost != lastPage && param.filter_by_player_name != null}">
+                <a th:text="${lastPage}"
+                   th:href="@{matches(page=${lastPage}, filter_by_player_name=${param.filter_by_player_name})}"
+                   class="button-secondary button-pagination"
+                ></a>
+            </li>
+            <li th:if="${rightMost != lastPage && param.filter_by_player_name == null}">
+                <a th:text="${lastPage}"
+                   th:href="@{matches(page=${lastPage})}"
+                   class="button-secondary button-pagination"
+                ></a>
+            </li>
+            <li th:if="${currentPage != lastPage && param.filter_by_player_name != null}">
+                <a th:href="@{matches(page=${currentPage + 1}, filter_by_player_name=${param.filter_by_player_name})}"
+                   class="button-secondary button-pagination"
+                >
+                    <div th:include="~{fragments/arrows/right-arrow}"></div>
+                </a>
+            </li>
+            <li th:if="${currentPage != lastPage && param.filter_by_player_name == null}">
+                <a th:href="@{matches(page=${currentPage + 1})}"
+                   class="button-secondary button-pagination"
+                >
+                    <div th:include="~{fragments/arrows/right-arrow}"></div>
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
