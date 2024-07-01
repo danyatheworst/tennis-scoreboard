@@ -2,70 +2,102 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Matches</title>
-    <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      .winner {
-        color: green;
-        font-weight: bold;
-      }
-      .no-matches {
-        font-size: 18px;
-        color: red;
-        margin-top: 20px;
-      }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/error-message.css}">
+    <link rel="stylesheet" th:href="@{/css/matches.css}">
 </head>
 <body>
-<form action="matches" method="get">
-  <label for="playerName">Enter player name:</label>
-    <input id="playerName" type="text" name="filter_by_player_name" placeholder="Enter player name" required>
-  <button type="submit">Search</button>
-</form>
-<a th:href="@{matches}"
-   th:if="${param.filter_by_player_name != null}">clear filter</a>
-<br/>
-<th:block th:with="matches=${matchesResponseDto.matches}">
-<table th:if="${matches.size() > 0}">
-  <thead>
-  <tr>
-    <th>Player 1</th>
-    <th>Player 2</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="match : ${matchesResponseDto.matches}">
-    <td>
-      <span th:text="${match.player1.name}"></span>
-      <span class="winner" th:if="${match.player1.ID == match.winner.ID}">✔</span>
-    </td>
-    <td>
-      <span th:text="${match.player2.name}"></span>
-      <span class="winner" th:if="${match.player2.ID == match.winner.ID}">✔</span>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="container">
+    <div class="wrapper">
+        <div th:with="matches=${matchesResponseDto.matches}"
+             class="matches border-primary">
+            <div class="search">
+                <form action="matches" method="get">
+                    <label for="playerName">Enter player name:</label>
+                    <input class="input"
+                           id="playerName"
+                           type="text"
+                           name="filter_by_player_name"
+                           placeholder="Enter player name"
+                           required
+                    >
+                    <button class="button-primary"
+                            type="submit"
+                    >
+                        Search
+                    </button>
+                    <a th:href="@{matches}"
+                       th:if="${param.filter_by_player_name != null}"
+                       class="button-secondary"
+                    >
+                        clear filter
+                    </a>
+                </form>
+            </div>
+            <th:block>
+                <table
+                        th:if="${matches.size() > 0}"
+                        class="border-primary"
+                >
+                    <thead>
+                    <tr>
+                        <th>Player 1</th>
+                        <th>Player 2</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="match : ${matchesResponseDto.matches}">
+                        <td>
+                            <div class="player">
+                                <span th:text="${match.player1.name}"
+                                      class="player-name"
+                                >
+                                </span>
+                                <span th:if="${match.player1.ID == match.winner.ID}"
+                                      class="winner"
+                                >
+                                  🏆
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="player">
+                                <span th:text="${match.player2.name}"
+                                      class="player-name"
+                                >
+                                </span>
+                                <span th:if="${match.player2.ID == match.winner.ID}"
+                                      class="winner"
+                                >
+                                  🏆
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
-<th:block th:if="${matches.size() > 0}"
-          th:include="~{fragments/pagination :: pagination
+                <th:block th:if="${matches.size() > 0}"
+                          th:include="~{fragments/pagination :: pagination
 (${matchesResponseDto.totalCount}, ${matchesResponseDto.currentPage}, ${matchesResponseDto.pageSize})}"
-
-></th:block>
-<div th:if="${matchesResponseDto.totalCount == 0}" class="no-matches">No matches</div>
-</th:block>
+                ></th:block>
+                <div th:if="${matchesResponseDto.totalCount == 0 && param.filter_by_player_name == null}"
+                     class="no-matches"
+                >
+                    No matches have been played yet...
+                </div>
+              <div th:if="${matchesResponseDto.totalCount == 0 && param.filter_by_player_name != null}"
+                   class="no-matches"
+              >
+                No matches found...
+              </div>
+            </th:block>
+        </div>
+    </div>
+</div>
 </body>
 </body>
 </html>
