@@ -2,6 +2,7 @@ package com.danyatheworst.match;
 
 import com.danyatheworst.exceptions.NotFoundException;
 import com.danyatheworst.match.dto.CreateMatchRequestDto;
+import com.danyatheworst.match.score.MatchScore;
 import com.danyatheworst.player.Player;
 import com.danyatheworst.player.PlayerRepository;
 
@@ -27,6 +28,7 @@ public class OngoingMatchService {
         Match ongoingMatch = new Match();
         ongoingMatch.setPlayer1(player1);
         ongoingMatch.setPlayer2(player2);
+        ongoingMatch.setScore(new MatchScore(createMatchRequestDto.getFormat()));
         return this.ongoingMatchRepository.save(ongoingMatch);
     }
 }

@@ -35,5 +35,5 @@ public class Match {
     public Player winner;
 
     @Transient
-    public MatchScore score = new MatchScore();
+    public MatchScore score;
 }

@@ -8,9 +8,11 @@ import static com.danyatheworst.match.score.State.*;
 public class MatchScore extends Score<Integer> {
     public SetScore currentSet;
     public final List<SetScore> setsHistory = new ArrayList<>(3);
+    public Format format;
 
-    public MatchScore() {
+    public MatchScore(Format format) {
         this.currentSet = new SetScore();
+        this.format = format;
     }
 
     @Override
@@ -36,9 +38,17 @@ public class MatchScore extends Score<Integer> {
         this.setsHistory.add(this.currentSet);
         this.currentSet = new SetScore();
 
-        if (playerScore == 2 && oppositePlayerScore <= 1) {
-            return playerNumber == 0 ? PLAYER_ONE_WON : PLAYER_TWO_WON;
+        if (this.format == Format.BEST_OF_THREE) {
+            if (playerScore == 2 && oppositePlayerScore <= 1) {
+                return playerNumber == 0 ? PLAYER_ONE_WON : PLAYER_TWO_WON;
+            }
+        } else {
+            if (playerScore == 3 && oppositePlayerScore <= 2) {
+                return playerNumber == 0 ? PLAYER_ONE_WON : PLAYER_TWO_WON;
+            }
         }
+
+
         return ONGOING;
     }
 }

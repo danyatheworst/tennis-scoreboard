@@ -6,6 +6,7 @@ import com.danyatheworst.exceptions.InvalidParameterException;
 import com.danyatheworst.match.dto.MatchScoreViewDto;
 import com.danyatheworst.match.score.*;
 import com.danyatheworst.player.PlayerScoreDto;
+import com.danyatheworst.utils.FormatUtil;
 import com.danyatheworst.utils.PointUtil;
 import com.danyatheworst.utils.Validation;
 import jakarta.servlet.ServletException;
@@ -114,7 +115,7 @@ public class MatchScoreServlet extends HttpServlet {
         for (SetScore setScore : setsHistory) {
             previousSets.add(setScore.getPlayerScore(playerId).toString());
         }
-        for (int i = previousSets.size(); i < 3; i++) {
+        for (int i = previousSets.size(); i < FormatUtil.getNumeric(matchScore.format); i++) {
             previousSets.add("0");
         }
         return new PlayerScoreDto(
