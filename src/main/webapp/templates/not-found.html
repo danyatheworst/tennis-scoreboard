@@ -1,3 +1,5 @@
+<!-- @thymesVar id="errorResponseDto" type="com.danyatheworst.common.ErrorResponseDto" -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +15,15 @@
 <div class="container">
     <div class="wrapper">
         <div class="error">
-            <span>404</span>
-            <p>It seems you got lost. Unfortunately, there's no such page :(</p>
+            <th:block th:if="${errorResponseDto == null}">
+                <span>404</span>
+                <p>It seems you got lost. Unfortunately, there's no such page :(</p>
+            </th:block>
+
+            <th:block th:if="${errorResponseDto != null}">
+                <p th:text="${errorResponseDto.message}"></p>
+            </th:block>
+
             <div class="button-wrapper">
                 <a th:href="@{/}"
                    class="button-secondary"

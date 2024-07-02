@@ -2,6 +2,11 @@
     width: 100%;
 }
 
+.top-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 .search {
     margin-bottom: 1.4rem;
 }
@@ -12,7 +17,7 @@
 }
 
 .search form > *:not(:last-child) {
-    margin-right: 0.7rem;
+    margin-right: 0.85rem;
 }
 
 .matches table {
@@ -51,5 +56,20 @@
 
 .no-matches {
     font-size: 17px;
-    color: var(--color-font-dark);
+    color: var(--color-black-dark);
+}
+
+@media (max-width: 700px) {
+    .top-container {
+        display: block;
+    }
+
+    .button-home {
+        display: inline-flex;
+        margin-bottom: 1.25rem;
+    }
+
+    .no-matches {
+        font-size: 15px;
+    }
 }

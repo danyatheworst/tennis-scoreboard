@@ -8,8 +8,8 @@
     --color-border: rgb(213, 211, 211);
     --color-border-dark: rgb(125, 124, 124);
 
-    --color-font: #2c2c2c;
-    --color-font-dark: #000000;
+    --color-black: #2c2c2c;
+    --color-black-dark: #000000;
 
     --color-error: #dc3545;
     --color-error-dark: #802029;
@@ -26,7 +26,7 @@ body {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-weight: 400;
     line-height: 1.2;
-    color: var(--color-font);
+    color: var(--color-black);
 }
 
 .container {
@@ -99,21 +99,15 @@ body {
     background-color: var(--color-secondary-dark);
 }
 
-input {
+.input {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border: none;
-    padding: 0;
     margin: 0;
     font: inherit;
     color: inherit;
     outline: transparent;
-    background: none;
     box-shadow: none;
-}
-
-.input {
     padding: 0.55rem 0.32rem;
     min-width: 17.5rem;
     background-color: transparent;
@@ -125,5 +119,71 @@ input {
 
 .input:focus {
     border-color: var(--color-border-dark);
-    color: var(--color-font-dark)
+    color: var(--color-black-dark)
+}
+
+input[type="radio"] {
+    appearance: none;
+}
+
+input[type="radio"] + label {
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    line-height: 20px;
+}
+
+input[type="radio"] + label::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    content: "";
+    display: inline-block;
+    width: 17px;
+    aspect-ratio: 1;
+    border: 1px solid var(--color-black);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    opacity: 1;
+    transition: all 0.3s;
+}
+
+input[type="radio"] + label::after {
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    content: "";
+    display: inline-block;
+    width: 7px;
+    aspect-ratio: 1;
+    border: 1px solid var(--color-primary);
+    background: var(--color-primary);
+    border-radius: 50%;
+
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+input[type="radio"]:checked + label::after {
+    opacity: 1;
+}
+
+@media (max-width: 700px) {
+    body {
+        font-size: 14px
+    }
+
+    .button-primary, .button-secondary {
+        min-width: 3rem;
+        height: 2rem;
+    }
+
+    .card {
+        padding: 0.75rem;
+    }
+
+    .heading {
+        font-size: 20px;
+    }
 }

@@ -16,28 +16,35 @@
         <div th:with="matches=${matchesResponseDto.matches}"
              class="matches card"
         >
-            <div class="search">
-                <form action="matches" method="get">
-                    <label for="playerName">Enter player name:</label>
-                    <input class="input"
-                           id="playerName"
-                           type="text"
-                           name="filter_by_player_name"
-                           placeholder="Enter player name"
-                           required
-                    >
-                    <button class="button-primary"
-                            type="submit"
-                    >
-                        Search
-                    </button>
-                    <a th:href="@{matches}"
-                       th:if="${param.filter_by_player_name != null}"
-                       class="button-secondary"
-                    >
-                        clear filter
-                    </a>
-                </form>
+            <div class="top-container">
+                <div class="search">
+                    <form action="matches" method="get">
+                        <label for="playerName">Enter player name:</label>
+                        <input class="input"
+                               id="playerName"
+                               type="text"
+                               name="filter_by_player_name"
+                               placeholder="Enter player name"
+                               required
+                        >
+                        <button class="button-primary"
+                                type="submit"
+                        >
+                            Search
+                        </button>
+                        <a th:href="@{matches}"
+                           th:if="${param.filter_by_player_name != null}"
+                           class="button-secondary"
+                        >
+                            clear filter
+                        </a>
+                    </form>
+                </div>
+                <a th:href="@{/}"
+                   class="button-secondary button-home"
+                >
+                    Home
+                </a>
             </div>
             <th:block>
                 <table

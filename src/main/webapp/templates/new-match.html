@@ -44,6 +44,30 @@
                     >
                 </div>
 
+                <div class="radio-group">
+                    <span>Best of:</span>
+                    <div class="radio-buttons">
+                        <div>
+                            <input id="best_of_three_radio"
+                                   type="radio"
+                                   value="BEST_OF_THREE"
+                                   name="format"
+                                   checked
+                            >
+                            <label for="best_of_three_radio">3</label>
+                        </div>
+
+                        <div>
+                            <input id="best_of_five_radio"
+                                   type="radio"
+                                   value="BEST_OF_FIVE"
+                                   name="format"
+                            >
+                            <label for="best_of_five_radio">5</label>
+                        </div>
+                    </div>
+                </div>
+
                 <th:block th:if="${errorResponseDto != null}">
                     <th:block th:replace="~{fragments/error-message :: error-message (${errorResponseDto.message})}"
                     ></th:block>
