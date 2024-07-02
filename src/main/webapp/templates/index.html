@@ -1,16 +1,37 @@
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/error-message.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
     <title>Home</title>
 </head>
 <body>
-<a th:href="@{/new-match}"
->new match</a>
+<div class="container">
+    <div class="wrapper">
+        <div class="home card">
+            <h2 class="heading">Tennis scoreboard</h2>
+            <div class="buttons">
+                <a th:href="@{/new-match}"
+                   class="button-primary"
+                >
+                    New match
+                </a>
+                <a th:href="@{/matches}"
+                   class="button-secondary"
+                >
+                    Finished matches
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <br/>
-<a th:href="@{/matches}"
->list of finished matches</a>
+
 </body>
 </html>

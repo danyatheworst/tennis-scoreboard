@@ -1,0 +1,13 @@
+.home {
+    min-width: 462px;
+}
+
+.home h2 {
+    margin-bottom: 1.4rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: auto;
+}
