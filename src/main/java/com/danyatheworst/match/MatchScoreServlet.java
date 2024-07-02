@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+import static jakarta.servlet.http.HttpServletResponse.*;
 
 @WebServlet(name = "MatchScoreServlet", urlPatterns = "/match-score")
 public class MatchScoreServlet extends HttpServlet {
@@ -27,20 +27,25 @@ public class MatchScoreServlet extends HttpServlet {
     private final FinishedMatchSaverService finishedMatchSaverService = new FinishedMatchSaverService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String uuid = req.getParameter("uuid");
+        if (uuid == null || uuid.isBlank()) {
+            resp.sendRedirect(req.getContextPath());
+            return;
+        }
 
         try {
-            Validation.validatePresence(uuid, "uuid");
             Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
 
             MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
+            resp.setStatus(SC_OK);
             ThymeleafRenderer.fromRequest(req, resp)
                     .addVariableToContext("matchScoreViewDto", matchScoreViewDto)
                     .addVariableToContext("uuid", uuid)
                     .build()
                     .render("match-score");
         } catch (InvalidParameterException e) {
+            resp.setStatus(SC_BAD_REQUEST);
             ThymeleafRenderer.fromRequest(req, resp)
                     .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
                     .build()
@@ -67,6 +72,7 @@ public class MatchScoreServlet extends HttpServlet {
                 MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
                 matchScoreViewDto.winnerId = winnerId;
 
+                resp.setStatus(SC_CREATED);
                 ThymeleafRenderer.fromRequest(req, resp)
                         .addVariableToContext("matchScoreViewDto", matchScoreViewDto)
                         .build()

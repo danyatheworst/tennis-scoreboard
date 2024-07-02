@@ -1,0 +1,26 @@
+.error span {
+    display: block;
+    margin-bottom: 1.25rem;
+    text-align: center;
+    font-size: 80px;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error p {
+    margin-bottom: 1.25rem;
+    font-size: 20px;
+    text-align: center;
+}
+
+.button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error .button-secondary {
+    display: inline-flex;
+    margin: 0 auto;
+}

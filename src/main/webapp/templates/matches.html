@@ -82,7 +82,7 @@
                     </tbody>
                 </table>
 
-                <th:block th:if="${matches.size() > matchesResponseDto.pageSize}"
+                <th:block th:if="${matches.size() > 0 && matchesResponseDto.totalCount > matchesResponseDto.pageSize}"
                           th:include="~{fragments/pagination :: pagination
 (${matchesResponseDto.totalCount}, ${matchesResponseDto.currentPage}, ${matchesResponseDto.pageSize})}"
                 ></th:block>

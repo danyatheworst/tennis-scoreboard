@@ -19,6 +19,7 @@
     width: 100%;
     border-collapse: collapse;
     background-color: var(--color-secondary);
+    margin-bottom: 1.4rem;
 }
 
 .matches table th {

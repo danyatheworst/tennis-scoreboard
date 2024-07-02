@@ -9,13 +9,15 @@
     <title>Match Score</title>
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/error-message.css}">
     <link rel="stylesheet" th:href="@{/css/match-score.css}">
 </head>
 <body>
 
 <div class="container">
     <div class="wrapper">
-        <div class="scoreboard card">
+        <div th:if="${errorResponseDto == null}"
+                class="scoreboard card">
             <table>
                 <tr>
                     <th>Previous sets</th>
@@ -88,6 +90,10 @@
                 </div>
             </div>
         </div>
+        <th:block th:if="${errorResponseDto != null}">
+            <th:block th:replace="~{fragments/error-message :: error-message (${errorResponseDto.message})}"
+            ></th:block>
+        </th:block>
     </div>
 </div>
 </body>

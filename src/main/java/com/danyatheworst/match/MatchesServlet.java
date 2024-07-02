@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static jakarta.servlet.http.HttpServletResponse.SC_OK;
+
 @WebServlet(name = "MatchesServlet", urlPatterns = "/matches")
 public class MatchesServlet extends HttpServlet {
     private final static int DEFAULT_PAGE_NUMBER = 1;
@@ -30,6 +32,7 @@ public class MatchesServlet extends HttpServlet {
         MatchesResponseDto matchesResponseDto = new MatchesResponseDto(
                 paginatedMatches.result, paginatedMatches.totalCount, pageNumber, DEFAULT_PAGE_SIZE
         );
+        resp.setStatus(SC_OK);
         ThymeleafRenderer.fromRequest(req, resp)
                 .addVariableToContext("matchesResponseDto", matchesResponseDto)
                 .build()

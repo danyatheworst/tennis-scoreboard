@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+
 @WebServlet(name = "MatchServlet", urlPatterns = "/new-match")
 public class NewMatchServlet extends HttpServlet {
     private final OngoingMatchService ongoingMatchService = new OngoingMatchService();
@@ -35,6 +37,7 @@ public class NewMatchServlet extends HttpServlet {
             String createdMatchUuid = this.ongoingMatchService.createNewMatch(createMatchRequestDto).toString();
             resp.sendRedirect("match-score?uuid=" + createdMatchUuid);
         } catch (InvalidParameterException e) {
+            resp.setStatus(SC_BAD_REQUEST);
             ThymeleafRenderer.fromRequest(req, resp)
                     .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
                     .build()
