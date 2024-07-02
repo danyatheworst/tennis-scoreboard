@@ -14,7 +14,8 @@
 <div class="container">
     <div class="wrapper">
         <div th:with="matches=${matchesResponseDto.matches}"
-             class="matches border-primary">
+             class="matches card"
+        >
             <div class="search">
                 <form action="matches" method="get">
                     <label for="playerName">Enter player name:</label>
@@ -81,7 +82,7 @@
                     </tbody>
                 </table>
 
-                <th:block th:if="${matches.size() > 0}"
+                <th:block th:if="${matches.size() > matchesResponseDto.pageSize}"
                           th:include="~{fragments/pagination :: pagination
 (${matchesResponseDto.totalCount}, ${matchesResponseDto.currentPage}, ${matchesResponseDto.pageSize})}"
                 ></th:block>

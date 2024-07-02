@@ -44,7 +44,12 @@ body {
     height: 100%;
 }
 
-.border-primary {
+.card {
+    padding: 1.5rem;
+    background-color: var(--color-secondary);
+}
+
+.card, .border-primary {
     border-width: 1px;
     border-style: solid;
     border-radius: 4px;
