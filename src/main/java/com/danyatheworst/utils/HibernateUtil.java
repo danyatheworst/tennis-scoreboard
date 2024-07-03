@@ -17,5 +17,4 @@ public class HibernateUtil {
             throw new ExceptionInInitializerError(ex);
         }
     }
-
 }
