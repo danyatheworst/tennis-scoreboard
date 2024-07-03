@@ -22,14 +22,12 @@
 
 .matches table {
     width: 100%;
-    border-collapse: collapse;
-    background-color: var(--color-secondary);
     margin-bottom: 1.4rem;
 }
 
 .matches table th {
     font-weight: 600;
-    font-size: 17px;
+    font-size: 1.0625rem;
 }
 
 .player {
@@ -55,7 +53,7 @@
 }
 
 .no-matches {
-    font-size: 17px;
+    font-size: 1.0625rem;
     color: var(--color-black-dark);
 }
 
@@ -67,9 +65,5 @@
     .button-home {
         display: inline-flex;
         margin-bottom: 1.25rem;
-    }
-
-    .no-matches {
-        font-size: 15px;
     }
 }

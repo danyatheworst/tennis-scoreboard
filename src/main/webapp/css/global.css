@@ -30,7 +30,7 @@ body {
 }
 
 .container {
-    max-width: 1080px;
+    max-width: 1024px;
     height: 100%;
     padding-left: 0.3125rem;
     padding-right: 0.3125rem;
@@ -45,7 +45,7 @@ body {
 }
 
 .card {
-    padding: 1.5rem;
+    padding: 1.25rem;
     background-color: var(--color-secondary);
 }
 
@@ -59,7 +59,7 @@ body {
 
 .heading {
     font-weight: 600;
-    font-size: 25px;
+    font-size: 1.5625rem;
     text-align: center;
 }
 
@@ -169,21 +169,21 @@ input[type="radio"]:checked + label::after {
     opacity: 1;
 }
 
-@media (max-width: 700px) {
-    body {
-        font-size: 14px
-    }
+table {
+    border-collapse: collapse;
+    background-color: var(--color-secondary);
+}
 
-    .button-primary, .button-secondary {
-        min-width: 3rem;
-        height: 2rem;
-    }
-
-    .card {
-        padding: 0.75rem;
-    }
-
-    .heading {
-        font-size: 20px;
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
     }
 }
+
+@media (max-width: 600px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+
