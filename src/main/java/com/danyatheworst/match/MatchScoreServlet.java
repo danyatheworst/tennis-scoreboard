@@ -110,7 +110,7 @@ public class MatchScoreServlet extends HttpServlet {
     }
 
     private PlayerScoreDto map(Integer playerId, String playerName, MatchScore matchScore) {
-        List<String> previousSets = new ArrayList<>(3);
+        List<String> previousSets = new ArrayList<>();
         List<SetScore> setsHistory = matchScore.setsHistory;
         for (SetScore setScore : setsHistory) {
             previousSets.add(setScore.getPlayerScore(playerId).toString());
