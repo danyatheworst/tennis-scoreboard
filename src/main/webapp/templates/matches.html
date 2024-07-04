@@ -24,7 +24,7 @@
                                id="playerName"
                                type="text"
                                name="filter_by_player_name"
-                               placeholder="Enter player name"
+                               placeholder="Roger Federer"
                                required
                         >
                         <button class="button-primary"
@@ -46,64 +46,63 @@
                     Home
                 </a>
             </div>
-            <th:block>
-                <table
-                        th:if="${matches.size() > 0}"
-                        class="border-primary"
-                >
-                    <thead>
-                    <tr>
-                        <th>Player 1</th>
-                        <th>Player 2</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="match : ${matchesResponseDto.matches}">
-                        <td>
-                            <div class="player">
+
+            <table th:if="${matches.size() > 0}"
+                   class="border-primary"
+            >
+                <thead>
+                <tr>
+                    <th>Player 1</th>
+                    <th>Player 2</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="match : ${matchesResponseDto.matches}">
+                    <td>
+                        <div class="player">
                                 <span th:text="${match.player1.name}"
                                       class="player-name"
                                 >
                                 </span>
-                                <span th:if="${match.player1.ID == match.winner.ID}"
-                                      class="winner"
-                                >
+                            <span th:if="${match.player1.ID == match.winner.ID}"
+                                  class="winner"
+                            >
                                   🏆
                                 </span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="player">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="player">
                                 <span th:text="${match.player2.name}"
                                       class="player-name"
                                 >
                                 </span>
-                                <span th:if="${match.player2.ID == match.winner.ID}"
-                                      class="winner"
-                                >
+                            <span th:if="${match.player2.ID == match.winner.ID}"
+                                  class="winner"
+                            >
                                   🏆
                                 </span>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-                <th:block th:if="${matches.size() > 0 && matchesResponseDto.totalCount > matchesResponseDto.pageSize}"
-                          th:include="~{fragments/pagination :: pagination
+            <th:block th:if="${matches.size() > 0 && matchesResponseDto.totalCount > matchesResponseDto.pageSize}"
+                      th:include="~{fragments/pagination :: pagination
 (${matchesResponseDto.totalCount}, ${matchesResponseDto.currentPage}, ${matchesResponseDto.pageSize})}"
-                ></th:block>
-                <div th:if="${matchesResponseDto.totalCount == 0 && param.filter_by_player_name == null}"
-                     class="no-matches"
-                >
-                    No matches have been played yet...
-                </div>
-              <div th:if="${matchesResponseDto.totalCount == 0 && param.filter_by_player_name != null}"
-                   class="no-matches"
-              >
+            ></th:block>
+            <div th:if="${matchesResponseDto.totalCount == 0 && param.filter_by_player_name == null}"
+                 class="no-matches"
+            >
+                No matches have been played yet...
+            </div>
+            <div th:if="${matchesResponseDto.totalCount == 0 && param.filter_by_player_name != null}"
+                 class="no-matches"
+            >
                 No matches found...
-              </div>
-            </th:block>
+            </div>
+
         </div>
     </div>
 </div>

@@ -1,6 +1,5 @@
 package com.danyatheworst.utils;
 
-import com.danyatheworst.exceptions.DatabaseOperationException;
 import com.danyatheworst.match.score.Point;
 
 

@@ -18,8 +18,9 @@ import static jakarta.servlet.http.HttpServletResponse.SC_OK;
 @WebServlet(name = "MatchesServlet", urlPatterns = "/matches")
 public class MatchesServlet extends HttpServlet {
     private final static int DEFAULT_PAGE_NUMBER = 1;
-    private final static int DEFAULT_PAGE_SIZE = 10;
+    private final static int DEFAULT_PAGE_SIZE = 8;
     private final static String DEFAULT_FILTER_BY_PLAYER_NAME = "";
+
     private final MatchRepository matchRepository = new MatchRepository();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
