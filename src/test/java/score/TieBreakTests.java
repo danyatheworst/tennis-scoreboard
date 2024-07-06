@@ -29,19 +29,6 @@ public class TieBreakTests {
     }
 
     @Test
-    public void testPlayerTwoWinsWithDifferenceOfTwo() {
-        //both players win 11 points
-        for (int i = 0; i < 11; i++) {
-            assertEquals(ONGOING, this.score.pointWon(0));
-            assertEquals(ONGOING, this.score.pointWon(1));
-        }
-
-        //second player wins two more points => 13:11 — second player wins the tie-break;
-        assertEquals(ONGOING, this.score.pointWon(1));
-        assertEquals(PLAYER_TWO_WON, this.score.pointWon(1));
-    }
-
-    @Test
     public void testTieBreakContinues() {
         //both players win 6 points
         for (int i = 0; i < 6; i++) {

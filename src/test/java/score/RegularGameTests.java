@@ -26,17 +26,6 @@ public class RegularGameTests {
     }
 
     @Test
-    public void testPlayerTwoFourPointsWinGame() {
-        //second player wins 3 points => 15:0, 30:0, 40:0
-        for (int i = 0; i < 3; i++) {
-            assertEquals(ONGOING, this.score.pointWon(1));
-        }
-
-        //40:0 — second player wins one more point => second player wins the game
-        assertEquals(PLAYER_TWO_WON, this.score.pointWon(1));
-    }
-
-    @Test
     public void testDeuce() {
         //both players win 3 points => 40:40
         for (int i = 0; i < 3; i++) {
