@@ -8,6 +8,7 @@ import com.danyatheworst.match.score.*;
 import com.danyatheworst.player.PlayerScoreDto;
 import com.danyatheworst.utils.FormatUtil;
 import com.danyatheworst.utils.PointUtil;
+import com.danyatheworst.utils.StringUtil;
 import com.danyatheworst.utils.Validation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,7 +36,7 @@ public class MatchScoreServlet extends HttpServlet {
             return;
         }
 
-        Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
+        Match ongoingMatch = this.ongoingMatchService.getById(StringUtil.fromString(uuid));
 
         MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
         resp.setStatus(SC_OK);
@@ -55,14 +56,14 @@ public class MatchScoreServlet extends HttpServlet {
 
         Validation.validatePresence(uuid, "uuid");
         Validation.validatePointWinnerId(pointWinnerId);
-        Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
+        Match ongoingMatch = this.ongoingMatchService.getById(StringUtil.fromString(uuid));
 
         //using calculation service seems quite redundant here
         State state = ongoingMatch.score.pointWon(Integer.parseInt(pointWinnerId));
         if (state != State.ONGOING) {
             int winnerId = state == State.PLAYER_ONE_WON ? 0 : 1;
 
-            this.finishedMatchSaverService.save(ongoingMatch, winnerId, this.fromString(uuid));
+            this.finishedMatchSaverService.save(ongoingMatch, winnerId, StringUtil.fromString(uuid));
             MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
             matchScoreViewDto.winnerId = winnerId;
 
@@ -76,26 +77,7 @@ public class MatchScoreServlet extends HttpServlet {
         }
 
     }
-
-    private UUID fromString(String string) {
-        try {
-            if (string.length() != 36) {
-                throw new InvalidParameterException();
-            }
-            return UUID.fromString(string);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidParameterException();
-        }
-    }
-
-    private String getPointRepresentation(Integer id, GameScore<?> gameScore) {
-        if (gameScore instanceof RegularGameScore) {
-            return PointUtil.getString((Point) gameScore.getPlayerScore(id));
-        } else {
-            return gameScore.getPlayerScore(id).toString();
-        }
-    }
-
+    
     private PlayerScoreDto map(Integer playerId, String playerName, MatchScore matchScore) {
         List<String> previousSets = new ArrayList<>();
         List<SetScore> setsHistory = matchScore.setsHistory;
@@ -109,7 +91,7 @@ public class MatchScoreServlet extends HttpServlet {
                 playerId,
                 playerName,
                 matchScore.currentSet.getPlayerScore(playerId).toString(),
-                this.getPointRepresentation(playerId, matchScore.currentSet.currentGame),
+                PointUtil.getPointRepresentation(playerId, matchScore.currentSet.currentGame),
                 previousSets
         );
     }
