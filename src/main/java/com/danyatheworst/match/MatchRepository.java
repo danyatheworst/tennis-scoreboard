@@ -14,12 +14,7 @@ import java.util.List;
 public class MatchRepository {
 
     public Paginated<Match> find(int pageNumber, int pageSize, String filterAlike) {
-        Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            session.doWork(connection -> connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ));
-
             String hqlCount = "SELECT COUNT(m) FROM Match m WHERE m.player1.name LIKE :alike OR m.player2.name LIKE :alike";
             String hql = "FROM Match m WHERE m.player1.name LIKE :alike OR m.player2.name LIKE :alike ORDER BY m.ID DESC";
 
@@ -35,12 +30,8 @@ public class MatchRepository {
                     .setMaxResults(pageSize)
                     .getResultList();
 
-            transaction.commit();
             return new Paginated<>(totalCount, matches);
         } catch (HibernateException e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
             throw new DatabaseOperationException("Failed to read matches in the database");
         }
     }

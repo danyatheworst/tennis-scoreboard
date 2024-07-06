@@ -7,7 +7,7 @@ import static com.danyatheworst.match.score.State.*;
 
 public class MatchScore extends Score<Integer> {
     public SetScore currentSet;
-    public final List<SetScore> setsHistory = new ArrayList<>(3);
+    public final List<SetScore> setsHistory = new ArrayList<>();
     public Format format;
 
     public MatchScore(Format format) {
