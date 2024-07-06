@@ -35,23 +35,16 @@ public class MatchScoreServlet extends HttpServlet {
             return;
         }
 
-        try {
-            Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
+        Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
 
-            MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
-            resp.setStatus(SC_OK);
-            ThymeleafRenderer.fromRequest(req, resp)
-                    .addVariableToContext("matchScoreViewDto", matchScoreViewDto)
-                    .addVariableToContext("uuid", uuid)
-                    .build()
-                    .render("match-score");
-        } catch (InvalidParameterException e) {
-            resp.setStatus(SC_BAD_REQUEST);
-            ThymeleafRenderer.fromRequest(req, resp)
-                    .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
-                    .build()
-                    .render("match-score");
-        }
+        MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
+        resp.setStatus(SC_OK);
+        ThymeleafRenderer.fromRequest(req, resp)
+                .addVariableToContext("matchScoreViewDto", matchScoreViewDto)
+                .addVariableToContext("uuid", uuid)
+                .build()
+                .render("match-score");
+
     }
 
     @Override
@@ -59,45 +52,39 @@ public class MatchScoreServlet extends HttpServlet {
         String uuid = req.getParameter("uuid");
         String pointWinnerId = req.getParameter("playerId");
 
-        try {
-            Validation.validatePresence(uuid, "uuid");
-            Validation.validatePointWinnerId(pointWinnerId);
-            Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
 
-            //using calculation service seems quite redundant here
-            State state = ongoingMatch.score.pointWon(Integer.parseInt(pointWinnerId));
-            if (state != State.ONGOING) {
-                int winnerId = state == State.PLAYER_ONE_WON ? 0 : 1;
-                
-                this.finishedMatchSaverService.save(ongoingMatch, winnerId, this.fromString(uuid));
-                MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
-                matchScoreViewDto.winnerId = winnerId;
+        Validation.validatePresence(uuid, "uuid");
+        Validation.validatePointWinnerId(pointWinnerId);
+        Match ongoingMatch = this.ongoingMatchService.getById(fromString(uuid));
 
-                resp.setStatus(SC_CREATED);
-                ThymeleafRenderer.fromRequest(req, resp)
-                        .addVariableToContext("matchScoreViewDto", matchScoreViewDto)
-                        .build()
-                        .render("match-score");
-            } else {
-                resp.sendRedirect("match-score?uuid=" + uuid);
-            }
-        } catch (InvalidParameterException e) {
-            resp.setStatus(SC_BAD_REQUEST);
+        //using calculation service seems quite redundant here
+        State state = ongoingMatch.score.pointWon(Integer.parseInt(pointWinnerId));
+        if (state != State.ONGOING) {
+            int winnerId = state == State.PLAYER_ONE_WON ? 0 : 1;
+
+            this.finishedMatchSaverService.save(ongoingMatch, winnerId, this.fromString(uuid));
+            MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
+            matchScoreViewDto.winnerId = winnerId;
+
+            resp.setStatus(SC_CREATED);
             ThymeleafRenderer.fromRequest(req, resp)
-                    .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
+                    .addVariableToContext("matchScoreViewDto", matchScoreViewDto)
                     .build()
                     .render("match-score");
+        } else {
+            resp.sendRedirect("match-score?uuid=" + uuid);
         }
+
     }
 
     private UUID fromString(String string) {
         try {
             if (string.length() != 36) {
-                throw new InvalidParameterException(string + " match id is not valid.");
+                throw new InvalidParameterException();
             }
             return UUID.fromString(string);
         } catch (IllegalArgumentException e) {
-            throw new InvalidParameterException(string + " match id is not valid.");
+            throw new InvalidParameterException();
         }
     }
 

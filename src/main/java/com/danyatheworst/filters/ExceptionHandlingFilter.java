@@ -3,6 +3,7 @@ package com.danyatheworst.filters;
 import com.danyatheworst.common.ErrorResponseDto;
 import com.danyatheworst.common.ThymeleafRenderer;
 import com.danyatheworst.exceptions.DatabaseOperationException;
+import com.danyatheworst.exceptions.InvalidParameterException;
 import com.danyatheworst.exceptions.NotFoundException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,6 +24,13 @@ public class ExceptionHandlingFilter extends HttpFilter {
             throws IOException, ServletException {
         try {
             super.doFilter(req, res, filterChain);
+
+        } catch (InvalidParameterException e) {
+            res.setStatus(SC_BAD_REQUEST);
+            ThymeleafRenderer.fromRequest(req, res)
+                    .addVariableToContext("errorResponseDto", new ErrorResponseDto(e.getMessage()))
+                    .build()
+                    .render("unexpected");
         } catch (NotFoundException e) {
             res.setStatus(SC_NOT_FOUND);
             ThymeleafRenderer.fromRequest(req, res)

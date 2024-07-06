@@ -52,7 +52,7 @@ public class NewMatchServlet extends HttpServlet {
         try {
             return Format.valueOf(format);
         } catch (IllegalArgumentException e) {
-            throw new InvalidParameterException("Format parameter can be 'BEST_OF_THREE' OR 'BEST_OF_FIVE'");
+            throw new InvalidParameterException();
         }
     }
 }
