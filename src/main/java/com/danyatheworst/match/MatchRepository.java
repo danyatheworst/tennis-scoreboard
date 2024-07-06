@@ -15,6 +15,8 @@ public class MatchRepository {
 
     public Paginated<Match> find(int pageNumber, int pageSize, String filterAlike) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            //The operation is non-atomic. The worst-case scenario is desynchronization of pagination on FE.
             String hqlCount = "SELECT COUNT(m) FROM Match m WHERE m.player1.name LIKE :alike OR m.player2.name LIKE :alike";
             String hql = "FROM Match m WHERE m.player1.name LIKE :alike OR m.player2.name LIKE :alike ORDER BY m.ID DESC";
 
