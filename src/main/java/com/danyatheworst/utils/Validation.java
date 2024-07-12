@@ -6,6 +6,9 @@ import com.danyatheworst.exceptions.InvalidParameterException;
 import java.util.Objects;
 
 public final class Validation {
+    //{*} — the function is used in the context of form validation:
+    // an argument 'String paramName' is needed to inform a user which submitted input value is invalid
+
     public static void validate(CreateMatchRequestDto createMatchRequestDto) {
         String playerName1 = createMatchRequestDto.getPlayerName1();
         String playerName2 = createMatchRequestDto.getPlayerName2();
@@ -18,12 +21,14 @@ public final class Validation {
         validatePlayerName(playerName2, "player name 2");
     }
 
+    //{*}
     public static void validatePresence(String value, String paramName) {
         if (value == null || value.isBlank()) {
             throw new InvalidParameterException(paramName + " is missing");
         }
     }
 
+    //{*}
     public static void validatePlayerName(String name, String paramName) {
         validatePresence(name, paramName);
         if (!name.matches("^[\\p{L}\\s\\-.]+$")) {
