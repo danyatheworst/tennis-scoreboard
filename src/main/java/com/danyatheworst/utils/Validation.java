@@ -13,7 +13,7 @@ public final class Validation {
         String playerName1 = createMatchRequestDto.getPlayerName1();
         String playerName2 = createMatchRequestDto.getPlayerName2();
 
-        if (Objects.equals(playerName1, playerName2)) {
+        if (Objects.equals(playerName1.toLowerCase(), playerName2.toLowerCase())) {
             throw new InvalidParameterException("Players' names must be unique");
         }
 
