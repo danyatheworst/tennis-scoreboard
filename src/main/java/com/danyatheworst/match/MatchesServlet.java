@@ -3,7 +3,8 @@ package com.danyatheworst.match;
 import com.danyatheworst.common.ThymeleafRenderer;
 import com.danyatheworst.common.Paginated;
 import com.danyatheworst.exceptions.InvalidParameterException;
-import com.danyatheworst.match.dto.MatchesResponseDto;
+import com.danyatheworst.match.dto.MatchesViewDto;
+import com.danyatheworst.match.dto.PaginationDto;
 import com.danyatheworst.utils.StringUtil;
 import com.danyatheworst.utils.Validation;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,12 +31,19 @@ public class MatchesServlet extends HttpServlet {
         playerName = StringUtil.removeExtraSpaces(parsePlayerNameOrGetDefault(playerName));
 
         Paginated<Match> paginatedMatches = this.matchRepository.find(pageNumber, DEFAULT_PAGE_SIZE, playerName);
-        MatchesResponseDto matchesResponseDto = new MatchesResponseDto(
-                paginatedMatches.result, paginatedMatches.totalCount, pageNumber, DEFAULT_PAGE_SIZE
+
+        PaginationDto paginationDto = null;
+        if (!paginatedMatches.result.isEmpty() && paginatedMatches.totalCount > DEFAULT_PAGE_SIZE) {
+            paginationDto = this.getPaginationInfo(paginatedMatches.totalCount, pageNumber, DEFAULT_PAGE_SIZE);
+        }
+        MatchesViewDto matchesViewDto = new MatchesViewDto(
+                paginatedMatches.result,
+                paginatedMatches.totalCount,
+                paginationDto
         );
         resp.setStatus(SC_OK);
         ThymeleafRenderer.fromRequest(req, resp)
-                .addVariableToContext("matchesResponseDto", matchesResponseDto)
+                .addVariableToContext("matchesViewDto", matchesViewDto)
                 .build()
                 .render("matches");
     }
@@ -57,5 +65,15 @@ public class MatchesServlet extends HttpServlet {
         } catch (InvalidParameterException e) {
             return DEFAULT_FILTER_BY_PLAYER_NAME;
         }
+    }
+
+    private PaginationDto getPaginationInfo(long totalCount, int currentPage, int pageSize) {
+        int lastPage = (int) ((totalCount + pageSize - 1) / pageSize);
+        int leftMost = Math.max(currentPage - 2, 1);
+        int rightMost = Math.min(currentPage + 2, lastPage);
+        boolean leftDots = leftMost - 1 > 1;
+        boolean rightDots = lastPage - rightMost > 1;
+
+        return new PaginationDto(lastPage, leftMost, rightMost, leftDots, rightDots, currentPage);
     }
 }

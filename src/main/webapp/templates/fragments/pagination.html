@@ -1,12 +1,14 @@
-<div th:fragment="pagination (totalCount, currentPage, pageSize)">
+<!-- @thymesVar id="pagination" type="com.danyatheworst.match.dto.PaginationDto" -->
+
+<div th:fragment="pagination (pagination)">
     <div th:with="
-                  lastPage=${(totalCount + pageSize - 1) / pageSize},
-                  leftMost=${currentPage - 2 < 1 ? 1 : currentPage - 2},
-                  leftDots=${leftMost - 1 > 1},
-                  rightMost=${currentPage + 2 > lastPage ? lastPage : currentPage + 2},
-                  rightDots=${lastPage - rightMost > 1}"
-         class="wrapper"
-    >
+                  lastPage=${pagination.lastPage},
+                  leftMost=${pagination.leftMost},
+                  leftDots=${pagination.leftDots},
+                  rightMost=${pagination.rightMost},
+                  rightDots=${pagination.rightDots},
+                  currentPage=${pagination.currentPage}"
+            class="wrapper">
         <ul class="pagination">
             <li th:if="${currentPage > 1 && param.filter_by_player_name != null}">
                 <a th:href="@{matches(page=${currentPage - 1}, filter_by_player_name=${param.filter_by_player_name})}"
