@@ -1,8 +1,6 @@
 package com.danyatheworst.match;
 
-import com.danyatheworst.common.ErrorResponseDto;
 import com.danyatheworst.common.ThymeleafRenderer;
-import com.danyatheworst.exceptions.InvalidParameterException;
 import com.danyatheworst.match.dto.MatchScoreViewDto;
 import com.danyatheworst.match.score.*;
 import com.danyatheworst.player.PlayerScoreDto;
@@ -10,7 +8,6 @@ import com.danyatheworst.utils.FormatUtil;
 import com.danyatheworst.utils.PointUtil;
 import com.danyatheworst.utils.StringUtil;
 import com.danyatheworst.utils.Validation;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static jakarta.servlet.http.HttpServletResponse.*;
 
@@ -65,7 +61,7 @@ public class MatchScoreServlet extends HttpServlet {
 
             this.finishedMatchSaverService.save(ongoingMatch, winnerId, StringUtil.fromString(uuid));
             MatchScoreViewDto matchScoreViewDto = new MatchScoreViewDto(this.map(ongoingMatch));
-            matchScoreViewDto.winnerId = winnerId;
+            matchScoreViewDto.setWinnerId(winnerId);
 
             resp.setStatus(SC_CREATED);
             ThymeleafRenderer.fromRequest(req, resp)
